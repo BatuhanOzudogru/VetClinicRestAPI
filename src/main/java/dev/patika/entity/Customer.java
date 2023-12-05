@@ -5,22 +5,25 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "customer")
 @Data
-@RequiredArgsConstructor // Bunu dene!!!
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
-    @NotNull
-    @Column(name = "name")
+
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "phone")
+
+    @Column(name = "phone", nullable = false)
     private String phone;
 
     @Email
@@ -33,5 +36,7 @@ public class Customer {
     @Column(name = "city")
     private String city;
 
-    // Buraya animal ilişkisi gelecek!!!
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Animal> animalList;
+
 }

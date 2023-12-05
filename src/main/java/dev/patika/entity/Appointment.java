@@ -8,39 +8,30 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "vaccine")
+@Table(name = "appointment")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Vaccine {
+public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
 
-    @Column(name = "name",nullable = false)
-    private String name;
-
-
-    @Column(name = "code",nullable = false)
-    private String code;
-
-
-    @Temporal(TemporalType.DATE) ///
-    @Column(name = "protection_start_date")
-    private LocalDate protectionStartDate;
-
-
-    @Temporal(TemporalType.DATE) ///
-    @Column(name = "protection_finish_date")
-    private LocalDate protectionFinishDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "appointment_date", nullable = false)
+    private LocalDateTime appointmentDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "animal_id")
     private Animal animal;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
 
 }
