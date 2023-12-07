@@ -20,18 +20,18 @@ import java.util.List;
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", columnDefinition = "serial")
     private Long id;
 
-
-    @Column(name = "name",nullable = false)
+    @NotNull
+    @Column(name = "name")
     private String name;
 
     @Column(name = "species")
     private String species;
 
-
-    @Column(name = "breed",nullable = false)
+    @NotNull
+    @Column(name = "breed")
     private String breed;
 
     @Column(name = "gender")

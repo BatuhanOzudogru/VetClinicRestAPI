@@ -17,15 +17,15 @@ import java.time.LocalDate;
 public class Vaccine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", columnDefinition = "serial")
     private Long id;
 
-
-    @Column(name = "name",nullable = false)
+    @NotNull
+    @Column(name = "name")
     private String name;
 
-
-    @Column(name = "code",nullable = false)
+    @NotNull
+    @Column(name = "code")
     private String code;
 
 

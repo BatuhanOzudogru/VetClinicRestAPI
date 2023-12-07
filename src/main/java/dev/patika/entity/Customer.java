@@ -15,15 +15,15 @@ import java.util.List;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "id", columnDefinition = "serial")
     private Long id;
 
-
-    @Column(name = "name", nullable = false)
+    @NotNull
+    @Column(name = "name")
     private String name;
 
-
-    @Column(name = "phone", nullable = false)
+    @NotNull
+    @Column(name = "phone")
     private String phone;
 
     @Email

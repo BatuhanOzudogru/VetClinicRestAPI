@@ -1,11 +1,17 @@
 package dev.patika.api;
 
 import dev.patika.business.concretes.CustomerManager;
-import dev.patika.dto.request.CustomerSaveRequest;
-import dev.patika.dto.request.CustomerUpdateRequest;
+import dev.patika.core.result.ResultData;
+import dev.patika.core.utils.ResultHelper;
+import dev.patika.dto.request.CustomerRequest;
+import dev.patika.dto.response.CursorResponse;
 import dev.patika.dto.response.CustomerResponse;
+import dev.patika.entity.Customer;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,19 +36,31 @@ public class CustomerController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public CustomerResponse save(@RequestBody CustomerSaveRequest customerSaveRequest) {
-        return customerManager.create(customerSaveRequest);
+    public ResultData<CustomerResponse> save(@Valid @RequestBody CustomerRequest customerRequest) {
+        CustomerResponse customerResponse = customerManager.create(customerRequest);
+        return ResultHelper.created(customerResponse);
     }
 
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CustomerResponse update(@PathVariable Long id, @RequestBody CustomerUpdateRequest customerUpdateRequest) {
-        return customerManager.update(id, customerUpdateRequest);
+    public CustomerResponse update(@PathVariable Long id, @RequestBody CustomerRequest request) {
+        return customerManager.update(id, request);
     }
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id) {
         customerManager.delete(id);
+    }
+
+    @GetMapping("/sinan")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<CursorResponse<CustomerResponse>> cursor(
+            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(name = "size", required = false, defaultValue = "10") int size
+    ){
+
+        return ResultHelper.cursor(customerManager.cursor(page, size));
+
     }
 }
