@@ -2,6 +2,7 @@ package dev.patika.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -14,19 +15,20 @@ import java.util.List;
 @NoArgsConstructor
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "serial")
     private Long id;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "name")
     private String name;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "phone")
     private String phone;
 
     @Email
+    @NotEmpty
     @Column(name = "mail")
     private String mail;
 

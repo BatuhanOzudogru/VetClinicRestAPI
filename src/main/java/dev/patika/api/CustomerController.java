@@ -1,6 +1,7 @@
 package dev.patika.api;
 
 import dev.patika.business.concretes.CustomerManager;
+import dev.patika.core.result.Result;
 import dev.patika.core.result.ResultData;
 import dev.patika.core.utils.ResultHelper;
 import dev.patika.dto.request.CustomerRequest;
@@ -22,16 +23,16 @@ import java.util.List;
 public class CustomerController {
     private final CustomerManager customerManager;
 
-    @GetMapping()
-    @ResponseStatus(HttpStatus.OK)
-    public List<CustomerResponse> findAll() {
-        return customerManager.findAll();
-    }
-
-    @GetMapping("/{id}")
+    @GetMapping("/byId/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerResponse getById(@PathVariable("id") Long id) {
         return customerManager.getById(id);
+    }
+
+    @GetMapping("/byName/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerResponse getByName(@PathVariable("name") String name) {
+        return customerManager.getByName(name);
     }
 
     @PostMapping("/create")
@@ -43,17 +44,19 @@ public class CustomerController {
 
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CustomerResponse update(@PathVariable Long id, @RequestBody CustomerRequest request) {
-        return customerManager.update(id, request);
+    public ResultData<CustomerResponse> update(@PathVariable Long id,@Valid @RequestBody CustomerRequest request) {
+        CustomerResponse customerResponse = customerManager.update(id, request);
+        return ResultHelper.updated(customerResponse);
     }
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("id") Long id) {
+    public Result delete(@PathVariable("id") Long id) {
         customerManager.delete(id);
+        return ResultHelper.deleted();
     }
 
-    @GetMapping("/sinan")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public ResultData<CursorResponse<CustomerResponse>> cursor(
             @RequestParam(name = "page", required = false, defaultValue = "0") int page,

@@ -11,13 +11,23 @@ public class ResultHelper {
         return new ResultData<>(true, "201", Message.CREATED, data);
     }
 
+    public static <T> ResultData<T> updated(T data) {
+        return new ResultData<>(true, "200", Message.UPDATED, data);
+    }
+
+
     public static <T> ResultData<T> validateError(T data) {
         return new ResultData<>(false, "400", Message.VALIDATE_ERROR, data);
+    }
+
+    public static Result deleted() {
+        return new Result(true, "200", Message.DELETED);
     }
 
     public static Result notFoundError() {
         return new Result(false, "404", Message.NOT_FOUND);
     }
+
 
     public static Result alreadyExistError() {
         return new Result(false, "400", Message.ALREADY_EXIST);

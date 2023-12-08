@@ -1,16 +1,21 @@
 package dev.patika.dto.request;
 
-import jakarta.validation.Valid;
+import dev.patika.entity.AvailableDate;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerRequest {
+public class DoctorRequest {
     @NotEmpty(message = "name value can't be empty")
     private String name;
     @NotEmpty(message = "phone value can't be empty")
@@ -23,4 +28,6 @@ public class CustomerRequest {
     private String address;
 
     private String city;
+
+
 }

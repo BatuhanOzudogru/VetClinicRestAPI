@@ -8,11 +8,10 @@ import java.util.List;
 
 public interface ICustomerService {
     CustomerResponse getById (Long id);
+    CustomerResponse getByName (String name);
 
     CustomerResponse create(CustomerRequest request);
     void delete(Long id);
     CustomerResponse update(Long id, CustomerRequest request);
-
-    List<CustomerResponse> findAll ();
     Page<CustomerResponse> cursor(int page, int size);
 }

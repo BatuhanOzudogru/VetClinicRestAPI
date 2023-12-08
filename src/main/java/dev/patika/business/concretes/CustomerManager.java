@@ -32,8 +32,13 @@ public class CustomerManager implements ICustomerService {
     }
 
     @Override
+    public CustomerResponse getByName(String name) {
+        return customerMapper.asOutput(customerRepo.findByName(name).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
+    }
+
+    @Override
     public CustomerResponse create(CustomerRequest customerRequest) {
-        Optional<Customer> isCustomerExist = customerRepo.findByName(customerRequest.getName());
+        Optional<Customer> isCustomerExist = customerRepo.findByPhoneOrMail(customerRequest.getPhone(), customerRequest.getMail());
 
         if (isCustomerExist.isEmpty()) {
             Customer customerSaved = customerRepo.save(customerMapper.asEntity(customerRequest));
@@ -51,7 +56,6 @@ public class CustomerManager implements ICustomerService {
             customerRepo.delete(customerFromDb.get());
         } else {
             throw new NotFoundException(Message.NOT_FOUND);
-
         }
     }
 
@@ -65,13 +69,11 @@ public class CustomerManager implements ICustomerService {
 
         Customer customer = customerFromDb.get();
         customerMapper.update(customer, request);
+
+
         return customerMapper.asOutput(customerRepo.save(customer));
     }
 
-    @Override
-    public List<CustomerResponse> findAll() {
-        return customerMapper.asOutput(customerRepo.findAll());
-    }
 
     @Override
     public Page<CustomerResponse> cursor(int page, int size) {
