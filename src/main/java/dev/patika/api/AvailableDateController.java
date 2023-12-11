@@ -22,8 +22,8 @@ public class AvailableDateController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AvailableDateResponse getById(@PathVariable("id") Long id) {
-        return availableDateManager.getById(id);
+    public ResultData<AvailableDateResponse> getById(@PathVariable("id") Long id) {
+        return ResultHelper.success(availableDateManager.getById(id));
     }
 
     @PostMapping("/create")

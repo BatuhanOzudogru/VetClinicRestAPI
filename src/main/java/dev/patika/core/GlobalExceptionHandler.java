@@ -44,6 +44,22 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ResultHelper.doctorError(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(AppointmentTimeException.class)
+    public ResponseEntity<Result>  handleAppointmentTimeException(){
+        return new ResponseEntity<>(ResultHelper.appointmentTimeError(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AppointmentExistsException.class)
+    public ResponseEntity<Result>  handleAppointmentExistsException(){
+        return new ResponseEntity<>(ResultHelper.appointmentExistsError(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AppointmentNotAvailableException.class)
+    public ResponseEntity<Result>  handleAppointmentNotAvailableException(){
+        return new ResponseEntity<>(ResultHelper.appointmentNotAvailableError(), HttpStatus.BAD_REQUEST);
+    }
+
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ResultData<List<String>>> handleValidationErrors(MethodArgumentNotValidException e) {
         List<String> validationErrorList = e.getBindingResult().getFieldErrors()

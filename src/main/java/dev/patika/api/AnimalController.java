@@ -20,8 +20,8 @@ public class AnimalController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AnimalResponse getById(@PathVariable("id") Long id) {
-        return animalManager.getById(id);
+    public ResultData<AnimalResponse> getById(@PathVariable("id") Long id) {
+        return ResultHelper.success(animalManager.getById(id));
     }
 
     @PostMapping("/create")

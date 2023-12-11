@@ -2,21 +2,27 @@ package dev.patika.business.concretes;
 
 import dev.patika.business.abstracts.IAppointmentService;
 import dev.patika.core.config.mapper.IAppointmentMapper;
-import dev.patika.core.exception.DoctorNotAvailableException;
-import dev.patika.core.exception.NotFoundException;
+import dev.patika.core.exception.*;
 import dev.patika.core.utils.Message;
+import dev.patika.dal.IAnimalRepo;
 import dev.patika.dal.IAppointmentRepo;
 import dev.patika.dal.IAvailableDateRepo;
+import dev.patika.dal.IDoctorRepo;
 import dev.patika.dto.request.AppointmentRequest;
 import dev.patika.dto.response.AppointmentResponse;
+import dev.patika.entity.Animal;
 import dev.patika.entity.Appointment;
 import dev.patika.entity.AvailableDate;
+import dev.patika.entity.Doctor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,6 +32,8 @@ public class AppointmentManager implements IAppointmentService {
     private final IAppointmentRepo appointmentRepo;
     private final IAppointmentMapper appointmentMapper;
     private final IAvailableDateRepo availableDateRepo;
+    private final IDoctorRepo doctorRepo;
+    private final IAnimalRepo animalRepo;
 
     @Override
     public AppointmentResponse getById(Long id) {
@@ -33,21 +41,48 @@ public class AppointmentManager implements IAppointmentService {
     }
 
     @Override
+    public List<AppointmentResponse> getByDoctorIdAndAppointmentDate(Long id, LocalDateTime startDate, LocalDateTime endDate) {
+        Doctor doctor = doctorRepo.findById(id).orElseThrow();
+        return appointmentMapper.asOutput(appointmentRepo.findByDoctorAndAppointmentDateBetween(doctor,startDate, endDate).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
+    }
+
+    @Override
+    public List<AppointmentResponse> getByAnimalIdAndAppointmentDate(Long id, LocalDateTime startDate, LocalDateTime endDate) {
+        Animal animal = animalRepo.findById(id).orElseThrow();
+        return appointmentMapper.asOutput(appointmentRepo.findByAnimalAndAppointmentDateBetween(animal,startDate, endDate).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
+    }
+
+    @Override
     public AppointmentResponse create(AppointmentRequest request) {
 
-//        Optional<Appointment> isAppointmentExist = appointmentRepo.findByDoctorAndAppointmentDate(request.getDoctor(), request.getAppointmentDate());
         Optional<AvailableDate> isAvailableDateExist = availableDateRepo.findByDoctorAndDate(request.getDoctor(), request.getAppointmentDate().toLocalDate());
-        System.out.println("batu");
-        System.out.println(request.getDoctor().getName());
-        System.out.println(request.getAppointmentDate().toLocalDate());
-        System.out.println("batu");
+        Optional<Appointment> isAppointmentExist = appointmentRepo.findByDoctorAndAnimalAndAppointmentDate(request.getDoctor(), request.getAnimal(), request.getAppointmentDate());
+        Optional<Appointment> isAppointmentTaken = appointmentRepo.findByDoctorAndAppointmentDate(request.getDoctor(), request.getAppointmentDate());
 
-        if (isAvailableDateExist.isPresent()) {
+
+        if (request.getAppointmentDate().getMinute() != 0) {
+
+            throw new AppointmentTimeException();
+
+        } else if (isAppointmentExist.isPresent()) {
+
+            throw new AppointmentExistsException();
+
+        } else if (isAvailableDateExist.isEmpty()) {
+
+            throw new DoctorNotAvailableException();
+
+        } else if (isAppointmentTaken.isPresent()) {
+
+            throw new AppointmentNotAvailableException();
+
+        } else {
+
             Appointment AppointmentSaved = appointmentRepo.save(appointmentMapper.asEntity(request));
-
             return appointmentMapper.asOutput(AppointmentSaved);
+
         }
-        throw new DoctorNotAvailableException();
+
 
     }
 

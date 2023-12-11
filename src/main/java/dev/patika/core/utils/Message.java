@@ -11,5 +11,8 @@ public class Message {
     public static final String DATE_ERROR = "The protection finish date can't be before the protection start date";
     public static final String VACCINE_ERROR = "The protective date of this vaccine has not expired";
     public static final String DOCTOR_ERROR = "This doctor is unavailable at this date";
+    public static final String APP0_TIME_ERROR = "Appointments can be set at the beginning of each hour";
+    public static final String APP0_EXIST_ERROR = "Appointment for this animal exists at this hour";
+    public static final String APP0_NOT_AVA_ERROR = "No appointment available at this hour";
 
 }

@@ -4,10 +4,12 @@ import dev.patika.dto.request.VaccineRequest;
 import dev.patika.dto.response.VaccineResponse;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public interface IVaccineService {
     VaccineResponse getById(Long id);
-
-//    VaccineResponse getByName(String name);
+    List<VaccineResponse> getByProtectionFinishDate(LocalDate startDate, LocalDate endDate);
 
     VaccineResponse create(VaccineRequest request);
 

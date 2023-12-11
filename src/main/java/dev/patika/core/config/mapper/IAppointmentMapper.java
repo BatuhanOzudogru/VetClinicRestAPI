@@ -9,6 +9,7 @@ import dev.patika.entity.Appointment;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -19,6 +20,7 @@ public interface IAppointmentMapper {
     AppointmentResponse asOutput(Appointment appointment);
 
     List<AppointmentResponse> asOutput(List<Appointment> appointmentList);
+
 
     void update(@MappingTarget Appointment entity, AppointmentRequest request);
 

@@ -23,16 +23,16 @@ import java.util.List;
 public class CustomerController {
     private final CustomerManager customerManager;
 
-    @GetMapping("/byId/{id}")
+    @GetMapping("/by-id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CustomerResponse getById(@PathVariable("id") Long id) {
-        return customerManager.getById(id);
+    public ResultData<CustomerResponse> getById(@PathVariable("id") Long id) {
+        return ResultHelper.success(customerManager.getById(id));
     }
 
-    @GetMapping("/byName/{name}")
+    @GetMapping("/by-name/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public CustomerResponse getByName(@PathVariable("name") String name) {
-        return customerManager.getByName(name);
+    public ResultData<CustomerResponse> getByName(@PathVariable("name") String name) {
+        return ResultHelper.success(customerManager.getByName(name));
     }
 
     @PostMapping("/create")

@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,11 @@ public class VaccineManager implements IVaccineService {
     @Override
     public VaccineResponse getById(Long id) {
         return vaccineMapper.asOutput(vaccineRepo.findById(id).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
+    }
+
+    @Override
+    public List<VaccineResponse> getByProtectionFinishDate(LocalDate startDate, LocalDate endDate) {
+        return vaccineMapper.asOutput(vaccineRepo.findByProtectionFinishDateBetween(startDate, endDate).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
 //    @Override

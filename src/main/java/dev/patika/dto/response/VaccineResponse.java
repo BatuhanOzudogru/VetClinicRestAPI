@@ -25,7 +25,7 @@ public class VaccineResponse {
 
     private LocalDate protectionFinishDate;
 
-    private Animal animal;
+    private CustomAnimalResponse animal;
 
 
 }

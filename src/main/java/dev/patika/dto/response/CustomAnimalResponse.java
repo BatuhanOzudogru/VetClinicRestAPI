@@ -5,12 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AvailableDateDoctorResponse {
-    private LocalDate date;
+public class CustomAnimalResponse {
+    private Long id;
+
+    private String name;
 }

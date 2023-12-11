@@ -26,8 +26,8 @@ public class DoctorController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public DoctorResponse getById(@PathVariable("id") Long id) {
-        return doctorManager.getById(id);
+    public ResultData<DoctorResponse> getById(@PathVariable("id") Long id) {
+        return ResultHelper.success(doctorManager.getById(id));
     }
 
     @PostMapping("/create")

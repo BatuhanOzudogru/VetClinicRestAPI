@@ -6,12 +6,17 @@ import dev.patika.core.result.Result;
 import dev.patika.core.result.ResultData;
 import dev.patika.core.utils.ResultHelper;
 import dev.patika.dto.request.VaccineRequest;
+import dev.patika.dto.response.AppointmentResponse;
 import dev.patika.dto.response.VaccineResponse;
 import dev.patika.dto.response.CursorResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/vaccines")
@@ -19,10 +24,21 @@ import org.springframework.web.bind.annotation.*;
 public class VaccineController {
     private final VaccineManager vaccineManager;
 
-    @GetMapping("/{id}")
+    @GetMapping("/by-id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public VaccineResponse getById(@PathVariable("id") Long id) {
-        return vaccineManager.getById(id);
+    public ResultData<VaccineResponse> getById(@PathVariable("id") Long id) {
+        return ResultHelper.success(vaccineManager.getById(id));
+    }
+
+    @GetMapping("/by-period")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<List<VaccineResponse>> getByAnimalIdAndAppointmentDate(
+            @RequestParam(name = "startDate", required = false, defaultValue = "2023-01-01")
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(name = "endDate", required = false, defaultValue = "2023-12-31")
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+
+        return ResultHelper.success(vaccineManager.getByProtectionFinishDate(startDate, endDate));
     }
 
     @PostMapping("/create")
@@ -34,7 +50,7 @@ public class VaccineController {
 
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResultData<VaccineResponse> update(@PathVariable Long id,@Valid @RequestBody VaccineRequest request) {
+    public ResultData<VaccineResponse> update(@PathVariable Long id, @Valid @RequestBody VaccineRequest request) {
         VaccineResponse vaccineResponse = vaccineManager.update(id, request);
         return ResultHelper.updated(vaccineResponse);
     }
@@ -51,7 +67,7 @@ public class VaccineController {
     public ResultData<CursorResponse<VaccineResponse>> cursor(
             @RequestParam(name = "page", required = false, defaultValue = "0") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size
-    ){
+    ) {
 
         return ResultHelper.cursor(vaccineManager.cursor(page, size));
 

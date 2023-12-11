@@ -1,16 +1,11 @@
 package dev.patika.dto.response;
 
-import dev.patika.entity.*;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -22,8 +17,8 @@ public class AppointmentResponse {
 
     private LocalDateTime appointmentDate;
 
-    private Animal animal;
+    private CustomAnimalResponse animal;
 
-    private Doctor doctor;
+    private AppointmentDoctorResponse doctor;
 
 }

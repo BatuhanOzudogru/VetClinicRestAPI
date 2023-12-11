@@ -45,6 +45,18 @@ public class ResultHelper {
         return new Result(false, "400", Message.DOCTOR_ERROR);
     }
 
+    public static Result appointmentTimeError() {
+        return new Result(false, "400", Message.APP0_TIME_ERROR);
+    }
+
+    public static Result appointmentExistsError() {
+        return new Result(false, "400", Message.APP0_EXIST_ERROR);
+    }
+
+    public static Result appointmentNotAvailableError() {
+        return new Result(false, "400", Message.APP0_NOT_AVA_ERROR);
+    }
+
     public static <T> ResultData<T> success(T data) {
         return new ResultData<>(true, "200", Message.OK, data);
     }
