@@ -8,8 +8,8 @@ public class Message {
     public static final String NOT_FOUND = "Data not found";
     public static final String ALREADY_EXIST = "Data already exists";
     public static final String OK = "Process successfully executed";
+    public static final String DATE_ERROR = "The protection finish date can't be before the protection start date";
+    public static final String VACCINE_ERROR = "The protective date of this vaccine has not expired";
+    public static final String DOCTOR_ERROR = "This doctor is unavailable at this date";
 
-//    public static String created(String data){
-//        return data + " successfully saved";
-//    }
 }

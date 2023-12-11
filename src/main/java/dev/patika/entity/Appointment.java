@@ -21,7 +21,7 @@ public class Appointment {
     @Column(name = "id", columnDefinition = "serial")
     private Long id;
 
-
+    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "appointment_date", nullable = false)
     private LocalDateTime appointmentDate;

@@ -26,5 +26,5 @@ public class CustomerResponse {
 
     private String city;
 
-    // private List<Animal> animalList;
+    private List<Animal> animalList;
 }

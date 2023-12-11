@@ -11,6 +11,5 @@ import java.util.Optional;
 public interface ICustomerRepo extends JpaRepository<Customer, Long> {
     Optional<Customer> findByPhoneOrMail(String phone, String mail);
 
-  //  @Query("SELECT * FROM customer WHERE name = ?")
     Optional<Customer> findByName(String name);
 }

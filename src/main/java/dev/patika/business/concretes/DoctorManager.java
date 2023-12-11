@@ -39,7 +39,6 @@ public class DoctorManager implements IDoctorService {
 
     @Override
     public DoctorResponse getById(Long id) {
-     //   Doctor doctor = doctorRepo.findById(id).orElseThrow();
 
         return doctorMapper.asOutput(doctorRepo.findById(id).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }

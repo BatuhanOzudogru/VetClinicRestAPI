@@ -24,7 +24,6 @@ public class AvailableDateManager implements IAvailableDateService {
 
     private final IAvailableDateRepo availableDateRepo;
     private final IAvailableDateMapper availableDateMapper;
-    private final IDoctorRepo doctorRepo;
 
     @Override
     public AvailableDateResponse getById(Long id) {
@@ -35,27 +34,9 @@ public class AvailableDateManager implements IAvailableDateService {
     public AvailableDateResponse create(AvailableDateRequest request) {
 
         Optional<AvailableDate> isAvailableDateExist = availableDateRepo.findByDate(request.getDate());
-        Long drId = request.getDoctor().getId();
-
-//        Doctor doctor = doctorRepo.findById(drId).orElseThrow();
-//
-//        doctor.getAvailableDateList().add(request.getAvailableDate());
-//
-//        List<AvailableDate> availableDates;
-//        availableDates.add();
-
-//        doctor.setAvailableDateList(availableDates);
-//        Doctor doctor = doctorRepo.findById(1L).orElseThrow();
-
-//        System.out.println("Batu");
-//        System.out.println(doctor.getName());
-//        System.out.println(doctor.getAvailableDateList());
-
 
         if (isAvailableDateExist.isEmpty()) {
             AvailableDate availableDateSaved = availableDateRepo.save(availableDateMapper.asEntity(request));
-//            availableDateSaved.setDoctor(doctor);
-//            availableDateSaved.getDoctor().setAvailableDateList(doctor.getAvailableDateList());
             return availableDateMapper.asOutput(availableDateSaved);
         }
         throw new EntityExistsException(Message.ALREADY_EXIST);

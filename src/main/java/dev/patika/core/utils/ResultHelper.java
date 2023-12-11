@@ -33,6 +33,18 @@ public class ResultHelper {
         return new Result(false, "400", Message.ALREADY_EXIST);
     }
 
+    public static Result localDateError() {
+        return new Result(false, "400", Message.DATE_ERROR);
+    }
+
+    public static Result vaccineError() {
+        return new Result(false, "400", Message.VACCINE_ERROR);
+    }
+
+    public static Result doctorError() {
+        return new Result(false, "400", Message.DOCTOR_ERROR);
+    }
+
     public static <T> ResultData<T> success(T data) {
         return new ResultData<>(true, "200", Message.OK, data);
     }

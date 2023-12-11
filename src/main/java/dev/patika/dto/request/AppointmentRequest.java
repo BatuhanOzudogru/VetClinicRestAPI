@@ -1,28 +1,28 @@
 package dev.patika.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import dev.patika.entity.Animal;
 import dev.patika.entity.Doctor;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AvailableDateRequest {
+public class AppointmentRequest {
+    @NotNull(message = "appointment date value can't be empty")
+    private LocalDateTime appointmentDate;
 
-    @NotNull(message = "available date can't be empty")
-    private LocalDate date;
+    private Animal animal;
 
     private Doctor doctor;
+
 
 }
