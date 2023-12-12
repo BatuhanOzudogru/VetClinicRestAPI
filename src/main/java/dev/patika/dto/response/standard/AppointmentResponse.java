@@ -1,5 +1,7 @@
-package dev.patika.dto.response;
+package dev.patika.dto.response.standard;
 
+import dev.patika.dto.response.global.GlobalDoctorResponse;
+import dev.patika.dto.response.global.GlobalAnimalResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +19,8 @@ public class AppointmentResponse {
 
     private LocalDateTime appointmentDate;
 
-    private CustomAnimalResponse animal;
+    private GlobalAnimalResponse animal;
 
-    private AppointmentDoctorResponse doctor;
+    private GlobalDoctorResponse doctor;
 
 }

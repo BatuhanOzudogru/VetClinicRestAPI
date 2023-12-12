@@ -1,22 +1,16 @@
 package dev.patika.api;
 
-import dev.patika.business.concretes.CustomerManager;
 import dev.patika.business.concretes.DoctorManager;
 import dev.patika.core.result.Result;
 import dev.patika.core.result.ResultData;
 import dev.patika.core.utils.ResultHelper;
-import dev.patika.dto.request.CustomerRequest;
 import dev.patika.dto.request.DoctorRequest;
-import dev.patika.dto.response.CursorResponse;
-import dev.patika.dto.response.CustomerResponse;
-import dev.patika.dto.response.DoctorResponse;
-import dev.patika.entity.AvailableDate;
+import dev.patika.dto.response.pagination.CursorResponse;
+import dev.patika.dto.response.standard.DoctorResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/v1/doctors")
@@ -30,6 +24,7 @@ public class DoctorController {
         return ResultHelper.success(doctorManager.getById(id));
     }
 
+    // Değerlendirme Formu 12 - Proje isterlerine göre doktor kaydediliyor mu?
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<DoctorResponse> save(@Valid @RequestBody DoctorRequest doctorRequest) {

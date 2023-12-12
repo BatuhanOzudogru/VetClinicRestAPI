@@ -5,10 +5,8 @@ import dev.patika.core.result.Result;
 import dev.patika.core.result.ResultData;
 import dev.patika.core.utils.ResultHelper;
 import dev.patika.dto.request.AvailableDateRequest;
-import dev.patika.dto.request.CustomerRequest;
-import dev.patika.dto.response.AvailableDateResponse;
-import dev.patika.dto.response.CursorResponse;
-import dev.patika.dto.response.CustomerResponse;
+import dev.patika.dto.response.standard.AvailableDateResponse;
+import dev.patika.dto.response.pagination.CursorResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +24,7 @@ public class AvailableDateController {
         return ResultHelper.success(availableDateManager.getById(id));
     }
 
+    // Değerlendirme Formu 13 - Proje isterlerine göre doktor müsait günü kaydediliyor mu?
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<AvailableDateResponse> save(@Valid @RequestBody AvailableDateRequest availableDateRequest) {

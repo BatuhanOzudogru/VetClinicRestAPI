@@ -1,4 +1,4 @@
-package dev.patika.dto.response;
+package dev.patika.dto.response.pagination;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

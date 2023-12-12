@@ -1,10 +1,7 @@
 package dev.patika.core.config.mapper;
 
-import dev.patika.dto.request.CustomerRequest;
 import dev.patika.dto.request.DoctorRequest;
-import dev.patika.dto.response.CustomerResponse;
-import dev.patika.dto.response.DoctorResponse;
-import dev.patika.entity.Customer;
+import dev.patika.dto.response.standard.DoctorResponse;
 import dev.patika.entity.Doctor;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

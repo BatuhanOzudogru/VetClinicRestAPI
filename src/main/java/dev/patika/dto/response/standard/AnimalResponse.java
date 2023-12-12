@@ -1,15 +1,13 @@
-package dev.patika.dto.response;
+package dev.patika.dto.response.standard;
 
-import dev.patika.entity.Appointment;
-import dev.patika.entity.Customer;
-import dev.patika.entity.Vaccine;
+import dev.patika.dto.response.global.GlobalCustomerResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.List;
+
 
 @Getter
 @Setter
@@ -31,10 +29,7 @@ public class AnimalResponse {
 
     private LocalDate dateOfBirth;
 
-    private Customer customer;
+    private GlobalCustomerResponse customer;
 
-    private List<Appointment> appointmentList;
-
-    private List<Vaccine> vaccineList;
 
 }

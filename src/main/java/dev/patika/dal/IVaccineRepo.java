@@ -17,6 +17,8 @@ import java.util.Optional;
 @Repository
 public interface IVaccineRepo extends JpaRepository<Vaccine, Long> {
 
+    Optional<List<Vaccine>> findByAnimal(Animal animal);
+
     @Query("SELECT v FROM Vaccine v WHERE v.code = :vaccineCode " +
             "AND v.animal.id = :animalId " +
             "AND v.protectionFinishDate > :startDate")

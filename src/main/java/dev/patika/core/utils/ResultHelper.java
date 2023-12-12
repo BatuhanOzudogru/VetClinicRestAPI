@@ -2,7 +2,7 @@ package dev.patika.core.utils;
 
 import dev.patika.core.result.Result;
 import dev.patika.core.result.ResultData;
-import dev.patika.dto.response.CursorResponse;
+import dev.patika.dto.response.pagination.CursorResponse;
 import org.springframework.data.domain.Page;
 
 public class ResultHelper {

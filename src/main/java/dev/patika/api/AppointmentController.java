@@ -5,8 +5,8 @@ import dev.patika.core.result.Result;
 import dev.patika.core.result.ResultData;
 import dev.patika.core.utils.ResultHelper;
 import dev.patika.dto.request.AppointmentRequest;
-import dev.patika.dto.response.AppointmentResponse;
-import dev.patika.dto.response.CursorResponse;
+import dev.patika.dto.response.standard.AppointmentResponse;
+import dev.patika.dto.response.pagination.CursorResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,6 +28,7 @@ public class AppointmentController {
         return ResultHelper.success(appointmentManager.getById(id));
     }
 
+    // Değerlendirme Formu 24 - Randevular kullanıcı tarafından girilen tarih aralığına ve doktora göre filtreleniyor mu?
     @GetMapping("/by-doctor-and-period/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResultData<List<AppointmentResponse>> getByDoctorIdAndAppointmentDate(
@@ -39,6 +40,8 @@ public class AppointmentController {
 
         return ResultHelper.success(appointmentManager.getByDoctorIdAndAppointmentDate(id, startDate.atStartOfDay(), endDate.atStartOfDay()));
     }
+
+    // Değerlendirme Formu 23 - Randevular kullanıcı tarafından girilen tarih aralığına ve hayvana göre filtreleniyor mu?
 
     @GetMapping("/by-animal-and-period/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -52,6 +55,7 @@ public class AppointmentController {
         return ResultHelper.success(appointmentManager.getByAnimalIdAndAppointmentDate(id, startDate.atStartOfDay(), endDate.atStartOfDay()));
     }
 
+    // Değerlendirme Formu 14 - Proje isterlerine göre randevu kaydediliyor mu?
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<AppointmentResponse> save(@Valid @RequestBody AppointmentRequest request) {

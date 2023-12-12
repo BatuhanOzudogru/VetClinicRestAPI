@@ -1,11 +1,10 @@
 package dev.patika.core.config.mapper;
 
 import dev.patika.dto.request.CustomerRequest;
-import dev.patika.dto.response.CustomerResponse;
+import dev.patika.dto.response.standard.CustomerResponse;
 import dev.patika.entity.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package dev.patika.dto.response;
+package dev.patika.dto.response.standard;
 
 import dev.patika.entity.Doctor;
 import jakarta.persistence.Column;

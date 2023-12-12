@@ -5,8 +5,8 @@ import dev.patika.core.result.Result;
 import dev.patika.core.result.ResultData;
 import dev.patika.core.utils.ResultHelper;
 import dev.patika.dto.request.AnimalRequest;
-import dev.patika.dto.response.AnimalResponse;
-import dev.patika.dto.response.CursorResponse;
+import dev.patika.dto.response.standard.AnimalResponse;
+import dev.patika.dto.response.pagination.CursorResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,12 +18,20 @@ import org.springframework.web.bind.annotation.*;
 public class AnimalController {
     private final AnimalManager animalManager;
 
-    @GetMapping("/{id}")
+    @GetMapping("/by-id/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResultData<AnimalResponse> getById(@PathVariable("id") Long id) {
         return ResultHelper.success(animalManager.getById(id));
     }
 
+    // Değerlendirme Formu 16 - Hayvanlar isme göre filtreleniyor mu?
+    @GetMapping("/by-name/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<AnimalResponse> getByName(@PathVariable("name") String name) {
+        return ResultHelper.success(animalManager.getByName(name));
+    }
+
+    // Değerlendirme Formu 11 - Proje isterlerine göre hayvan kaydediliyor mu?
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<AnimalResponse> save(@Valid @RequestBody AnimalRequest request) {

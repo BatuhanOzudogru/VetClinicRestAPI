@@ -1,10 +1,7 @@
 package dev.patika.business.abstracts;
 
 import dev.patika.dto.request.AnimalRequest;
-import dev.patika.dto.request.AvailableDateRequest;
-import dev.patika.dto.response.AnimalResponse;
-import dev.patika.dto.response.AvailableDateResponse;
-import dev.patika.entity.Animal;
+import dev.patika.dto.response.standard.AnimalResponse;
 import org.springframework.data.domain.Page;
 
 public interface IAnimalService {

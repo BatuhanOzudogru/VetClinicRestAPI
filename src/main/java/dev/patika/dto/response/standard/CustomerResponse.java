@@ -1,26 +1,31 @@
-package dev.patika.dto.request;
+package dev.patika.dto.response.standard;
 
+import dev.patika.dto.response.global.GlobalAnimalResponse;
+import dev.patika.entity.Animal;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerUpdateRequest {
+public class CustomerResponse {
 
-    @NotNull
+    private Long id;
+
     private String name;
 
-    @NotNull
     private String phone;
 
-    @Email
     private String mail;
 
     private String address;
 
     private String city;
+
+    private List<GlobalAnimalResponse> animalList;
 }

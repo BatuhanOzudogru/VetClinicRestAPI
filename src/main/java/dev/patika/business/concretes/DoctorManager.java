@@ -1,23 +1,15 @@
 package dev.patika.business.concretes;
 
-import dev.patika.business.abstracts.ICustomerService;
 import dev.patika.business.abstracts.IDoctorService;
 import dev.patika.core.config.mapper.IAvailableDateMapper;
-import dev.patika.core.config.mapper.ICustomerMapper;
 import dev.patika.core.config.mapper.IDoctorMapper;
 import dev.patika.core.exception.EntityExistsException;
 import dev.patika.core.exception.NotFoundException;
 import dev.patika.core.utils.Message;
 import dev.patika.dal.IAvailableDateRepo;
-import dev.patika.dal.ICustomerRepo;
 import dev.patika.dal.IDoctorRepo;
-import dev.patika.dto.request.CustomerRequest;
 import dev.patika.dto.request.DoctorRequest;
-import dev.patika.dto.response.AvailableDateResponse;
-import dev.patika.dto.response.CustomerResponse;
-import dev.patika.dto.response.DoctorResponse;
-import dev.patika.entity.AvailableDate;
-import dev.patika.entity.Customer;
+import dev.patika.dto.response.standard.DoctorResponse;
 import dev.patika.entity.Doctor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,6 +34,7 @@ public class DoctorManager implements IDoctorService {
         return doctorMapper.asOutput(doctorRepo.findById(id).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
+    // Değerlendirme Formu 12 - Proje isterlerine göre doktor kaydediliyor mu?
     @Override
     public DoctorResponse create(DoctorRequest request) {
         Optional<Doctor> isDoctorExist = doctorRepo.findByPhoneOrMail(request.getPhone(), request.getMail());
@@ -54,7 +46,6 @@ public class DoctorManager implements IDoctorService {
         throw new EntityExistsException(Message.ALREADY_EXIST);
 
     }
-
 
     @Override
     public void delete(Long id) {

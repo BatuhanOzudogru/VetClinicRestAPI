@@ -1,16 +1,15 @@
-package dev.patika.dto.response;
+package dev.patika.dto.response.global;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AvailableDateDoctorResponse {
-    private LocalDate date;
+public class GlobalAnimalResponse {
+    private Long id;
+    private String name;
 }

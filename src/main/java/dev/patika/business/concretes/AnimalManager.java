@@ -9,7 +9,7 @@ import dev.patika.core.utils.Message;
 import dev.patika.dal.IAnimalRepo;
 
 import dev.patika.dto.request.AnimalRequest;
-import dev.patika.dto.response.AnimalResponse;
+import dev.patika.dto.response.standard.AnimalResponse;
 
 import dev.patika.entity.Animal;
 import lombok.RequiredArgsConstructor;
@@ -32,11 +32,13 @@ public class AnimalManager implements IAnimalService {
         return animalMapper.asOutput(animalRepo.findById(id).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
+    // Değerlendirme Formu 16 - Hayvanlar isme göre filtreleniyor mu?
     @Override
     public AnimalResponse getByName(String name) {
         return animalMapper.asOutput(animalRepo.findByName(name).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
+    // Değerlendirme Formu 11 - Proje isterlerine göre hayvan kaydediliyor mu?
     @Override
     public AnimalResponse create(AnimalRequest request) {
 

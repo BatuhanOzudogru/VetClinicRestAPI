@@ -6,9 +6,8 @@ import dev.patika.core.exception.EntityExistsException;
 import dev.patika.core.exception.NotFoundException;
 import dev.patika.core.utils.Message;
 import dev.patika.dal.IAvailableDateRepo;
-import dev.patika.dal.IDoctorRepo;
 import dev.patika.dto.request.AvailableDateRequest;
-import dev.patika.dto.response.AvailableDateResponse;
+import dev.patika.dto.response.standard.AvailableDateResponse;
 import dev.patika.entity.AvailableDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,6 +29,7 @@ public class AvailableDateManager implements IAvailableDateService {
         return availableDateMapper.asOutput(availableDateRepo.findById(id).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
+    // Değerlendirme Formu 13 - Proje isterlerine göre doktor müsait günü kaydediliyor mu?
     @Override
     public AvailableDateResponse create(AvailableDateRequest request) {
 

@@ -6,9 +6,8 @@ import dev.patika.core.result.Result;
 import dev.patika.core.result.ResultData;
 import dev.patika.core.utils.ResultHelper;
 import dev.patika.dto.request.VaccineRequest;
-import dev.patika.dto.response.AppointmentResponse;
-import dev.patika.dto.response.VaccineResponse;
-import dev.patika.dto.response.CursorResponse;
+import dev.patika.dto.response.standard.VaccineResponse;
+import dev.patika.dto.response.pagination.CursorResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,17 +29,26 @@ public class VaccineController {
         return ResultHelper.success(vaccineManager.getById(id));
     }
 
+    // Değerlendirme Formu 20 - Belirli bir hayvana ait tüm aşı kayıtları (sadece bir hayvanın tüm aşı kayıtları) listelenebiliyor mu?
+    @GetMapping("/by-animal-id/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<List<VaccineResponse>> getByAnimalId(@PathVariable("id") Long id) {
+        return ResultHelper.success(vaccineManager.getByAnimalId(id));
+    }
+
+    // Değerlendirme Formu 21 - Hayvanların aşı kayıtları, girilen tarih aralığına göre doğru şekilde listeleniyor mu?
     @GetMapping("/by-period")
     @ResponseStatus(HttpStatus.OK)
-    public ResultData<List<VaccineResponse>> getByAnimalIdAndAppointmentDate(
+    public ResultData<List<VaccineResponse>> getByPeriod(
             @RequestParam(name = "startDate", required = false, defaultValue = "2023-01-01")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(name = "endDate", required = false, defaultValue = "2023-12-31")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
 
-        return ResultHelper.success(vaccineManager.getByProtectionFinishDate(startDate, endDate));
+        return ResultHelper.success(vaccineManager.getByPeriod(startDate, endDate));
     }
 
+    // Değerlendirme Formu 15 - Proje isterlerine göre hayvana ait aşı kaydediliyor mu?
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<VaccineResponse> save(@Valid @RequestBody VaccineRequest request) {

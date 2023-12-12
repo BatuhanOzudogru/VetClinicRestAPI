@@ -1,7 +1,6 @@
-package dev.patika.dto.response;
+package dev.patika.dto.response.standard;
 
-import dev.patika.entity.Animal;
-import jakarta.validation.constraints.NotEmpty;
+import dev.patika.dto.response.global.GlobalAnimalResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +24,7 @@ public class VaccineResponse {
 
     private LocalDate protectionFinishDate;
 
-    private CustomAnimalResponse animal;
+    private GlobalAnimalResponse animal;
 
 
 }
