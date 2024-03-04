@@ -2,6 +2,7 @@ package dev.patika.dto.request;
 
 import dev.patika.entity.Animal;
 import dev.patika.entity.Customer;
+import dev.patika.entity.Report;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,8 @@ public class VaccineRequest {
     private LocalDate protectionFinishDate;
 
     private Animal animal;
+
+    private Report report;
 
 
 }

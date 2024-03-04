@@ -1,6 +1,7 @@
 package dev.patika.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -36,5 +37,6 @@ public class Appointment {
     @JoinColumn(name = "doctor_id")
     @JsonIgnore
     private Doctor doctor;
+
 
 }

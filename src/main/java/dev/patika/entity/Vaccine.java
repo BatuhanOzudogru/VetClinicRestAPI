@@ -44,5 +44,10 @@ public class Vaccine {
     @JsonIgnore
     private Animal animal;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "report_id")
+    @JsonIgnore
+    private Report report;
+
 
 }
