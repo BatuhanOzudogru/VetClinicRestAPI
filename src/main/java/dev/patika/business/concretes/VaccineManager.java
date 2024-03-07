@@ -2,15 +2,19 @@ package dev.patika.business.concretes;
 
 import dev.patika.business.abstracts.IVaccineService;
 import dev.patika.core.config.mapper.IVaccineMapper;
+import dev.patika.core.exception.AnimalsDontMatchException;
 import dev.patika.core.exception.LocalDateException;
 import dev.patika.core.exception.NotFoundException;
 import dev.patika.core.exception.VaccineExistsException;
 import dev.patika.core.utils.Message;
 import dev.patika.dal.IAnimalRepo;
+import dev.patika.dal.IAppointmentRepo;
 import dev.patika.dal.IVaccineRepo;
+import dev.patika.dal.ReportRepository;
 import dev.patika.dto.request.VaccineRequest;
 import dev.patika.dto.response.standard.VaccineResponse;
 import dev.patika.entity.Animal;
+import dev.patika.entity.Report;
 import dev.patika.entity.Vaccine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,6 +33,8 @@ public class VaccineManager implements IVaccineService {
     private final IVaccineRepo vaccineRepo;
     private final IVaccineMapper vaccineMapper;
     private final IAnimalRepo animalRepo;
+    private final ReportRepository reportRepo;
+    private final IAppointmentRepo appointmentRepo;
 
     @Override
     public VaccineResponse getById(Long id) {
@@ -55,18 +61,29 @@ public class VaccineManager implements IVaccineService {
         if (request.getProtectionStartDate().isAfter(request.getProtectionFinishDate())) {
             throw new LocalDateException();
         }
+        Long requestAnimalId = request.getAnimal().getId();
+        Long reportId = request.getReport().getId();
+        Report vaccineReport = reportRepo.findById(reportId).orElse(null);
+        Long reportAnimalId = vaccineReport.getAppointment().getAnimal().getId();
 
         // Değerlendirme Formu 19 - Yeni aşı kaydetme işleminde koruyuculuk bitiş tarihi kontrolü yapılmış mı?
         // Koruyuculuk tarihi bitmiş aşıların kaydı yapılıp, koruyuculuğu bitmemiş aşıların kaydı engellenmiş mi?
         List<Vaccine> isVaccineValid = vaccineRepo.findVaccinesAfterStartDate(request.getCode(), request.getAnimal().getId(), request.getProtectionStartDate());
 
         if (isVaccineValid.isEmpty()) {
+            if(requestAnimalId.equals(reportAnimalId)) {
 
-            Vaccine vaccineSaved = vaccineRepo.save(vaccineMapper.asEntity(request));
+                Vaccine vaccineSaved = vaccineRepo.save(vaccineMapper.asEntity(request));
 
-            return vaccineMapper.asOutput(vaccineSaved);
+                return vaccineMapper.asOutput(vaccineSaved);
+            }else {
+                throw new AnimalsDontMatchException();
+            }
 
         }
+
+
+
 
         throw new VaccineExistsException();
 

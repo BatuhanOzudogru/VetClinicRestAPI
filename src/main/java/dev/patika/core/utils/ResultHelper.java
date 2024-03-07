@@ -28,7 +28,9 @@ public class ResultHelper {
         return new Result(false, "404", Message.NOT_FOUND);
     }
 
-
+    public static Result animalsDontMatch() {
+        return new Result(false, "404", Message.ANIMALS_DONT_MATCH);
+    }
     public static Result alreadyExistError() {
         return new Result(false, "400", Message.ALREADY_EXIST);
     }

@@ -54,7 +54,6 @@ public class ReportManager implements ReportService {
         oldReport.setPrice(request.getPrice());
         oldReport.setAppointment(request.getAppointment());
         reportRepository.save(oldReport);
-
         return reportMapper.convertToReportResponse(oldReport);
     }
 }

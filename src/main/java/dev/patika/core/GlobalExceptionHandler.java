@@ -58,6 +58,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Result>  handleAppointmentNotAvailableException(){
         return new ResponseEntity<>(ResultHelper.appointmentNotAvailableError(), HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(AnimalsDontMatchException.class)
+    public ResponseEntity<Result>  handleAnimalsDontMatchException(){
+        return new ResponseEntity<>(ResultHelper.animalsDontMatch(), HttpStatus.BAD_REQUEST);
+    }
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

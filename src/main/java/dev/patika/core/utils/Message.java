@@ -15,4 +15,6 @@ public class Message {
     public static final String APP0_EXIST_ERROR = "Appointment for this animal exists at this hour";
     public static final String APP0_NOT_AVA_ERROR = "No appointment available at this hour";
 
+    public static final String ANIMALS_DONT_MATCH = "The animal in the appointment and the animal in the report do not match";
+
 }
