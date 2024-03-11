@@ -104,20 +104,38 @@ public class VaccineManager implements IVaccineService {
 
     @Override
     public VaccineResponse update(Long id, VaccineRequest request) {
-        Optional<Vaccine> VaccineFromDb = vaccineRepo.findById(id);
+        Optional<Vaccine> vaccineFromDb = vaccineRepo.findById(id);
 
-        if (VaccineFromDb.isEmpty()) {
+        if (vaccineFromDb.isEmpty()) {
             throw new NotFoundException(Message.NOT_FOUND);
         }
 
-//        if (request.getAvailableDate() == null || request.getDoctor().getId() == null) {
-//            throw new EntityExistsException(Message.ALREADY_EXIST);
-//        }
+        Vaccine vaccine = vaccineFromDb.get();
 
-        Vaccine Vaccine = VaccineFromDb.get();
-        vaccineMapper.update(Vaccine, request);
-        return vaccineMapper.asOutput(vaccineRepo.save(Vaccine));
+        if (request.getProtectionStartDate().isAfter(request.getProtectionFinishDate())) {
+            throw new LocalDateException();
+        }
+
+        Long requestAnimalId = request.getAnimal().getId();
+        Long reportId = request.getReport().getId();
+        Report vaccineReport = reportRepo.findById(reportId).orElse(null);
+        Long reportAnimalId = vaccineReport.getAppointment().getAnimal().getId();
+
+
+        List<Vaccine> isVaccineValid = vaccineRepo.findVaccinesAfterStartDate(request.getCode(), request.getAnimal().getId(), request.getProtectionStartDate());
+
+        if (isVaccineValid.isEmpty()) {
+            if (requestAnimalId.equals(reportAnimalId)) {
+                vaccineMapper.update(vaccine, request);
+                return vaccineMapper.asOutput(vaccineRepo.save(vaccine));
+            } else {
+                throw new AnimalsDontMatchException();
+            }
+        }
+
+        throw new VaccineExistsException();
     }
+
 
     @Override
     public Page<VaccineResponse> cursor(int page, int size) {

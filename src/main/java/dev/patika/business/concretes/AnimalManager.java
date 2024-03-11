@@ -35,7 +35,7 @@ public class AnimalManager implements IAnimalService {
     // Değerlendirme Formu 16 - Hayvanlar isme göre filtreleniyor mu?
     @Override
     public AnimalResponse getByName(String name) {
-        return animalMapper.asOutput(animalRepo.findByName(name).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
+        return animalMapper.asOutput(animalRepo.findByNameIgnoreCaseLike(name).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
     // Değerlendirme Formu 11 - Proje isterlerine göre hayvan kaydediliyor mu?
@@ -69,7 +69,10 @@ public class AnimalManager implements IAnimalService {
     @Override
     public AnimalResponse update(Long id, AnimalRequest request) {
         Optional<Animal> animalFromDb = animalRepo.findById(id);
-
+        Optional<Animal> isAnimalExist = animalRepo.findByNameAndSpeciesAndBreedAndDateOfBirth(request.getName(), request.getSpecies(), request.getBreed(), request.getDateOfBirth());
+        if (isAnimalExist.isPresent()) {
+            throw new EntityExistsException(Message.ALREADY_EXIST);
+        }
         if (animalFromDb.isEmpty()) {
             throw new NotFoundException(Message.NOT_FOUND);
         }

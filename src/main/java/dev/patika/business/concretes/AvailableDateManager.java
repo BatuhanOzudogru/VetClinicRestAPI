@@ -58,6 +58,11 @@ public class AvailableDateManager implements IAvailableDateService {
     @Override
     public AvailableDateResponse update(Long id, AvailableDateRequest request) {
         Optional<AvailableDate> availableDateFromDb = availableDateRepo.findById(id);
+        Optional<AvailableDate> isAvailableDateExist = availableDateRepo.findByDate(request.getDate());
+
+        if (isAvailableDateExist.isPresent()) {
+            throw new EntityExistsException(Message.ALREADY_EXIST);
+        }
 
         if (availableDateFromDb.isEmpty()) {
             throw new NotFoundException(Message.NOT_FOUND);

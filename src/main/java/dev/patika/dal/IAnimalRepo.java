@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface IAnimalRepo extends JpaRepository<Animal, Long> {
    Optional<Animal> findByNameAndSpeciesAndBreedAndDateOfBirth(String name, String species, String breed, LocalDate date);
    Optional<Animal> findByNameAndCustomer(String name, Customer customer);
-   Optional<Animal> findByName(String name);
+   Optional<Animal> findByNameIgnoreCaseLike(String name);
 
 }

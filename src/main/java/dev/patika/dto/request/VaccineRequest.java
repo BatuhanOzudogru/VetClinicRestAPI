@@ -1,7 +1,6 @@
 package dev.patika.dto.request;
 
 import dev.patika.entity.Animal;
-import dev.patika.entity.Customer;
 import dev.patika.entity.Report;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;

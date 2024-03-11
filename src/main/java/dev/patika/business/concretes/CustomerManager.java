@@ -36,7 +36,7 @@ public class CustomerManager implements ICustomerService {
     // (sadece bir kişiye ait hayvanları görüntüle işlemi) başarılı bir şekilde çalışıyor mu?
     @Override
     public CustomerResponse getByName(String name) {
-        return customerMapper.asOutput(customerRepo.findByName(name).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
+        return customerMapper.asOutput(customerRepo.findByNameIgnoreCaseLike(name).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
     // Değerlendirme Formu 10 - Proje isterlerine göre hayvan sahibi kaydediliyor mu?

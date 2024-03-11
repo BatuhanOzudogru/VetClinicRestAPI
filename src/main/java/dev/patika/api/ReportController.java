@@ -27,4 +27,16 @@ public class ReportController {
     public ReportResponse create(@RequestBody ReportRequest request){
         return reportManager.create(request);
     }
+
+    @PutMapping("/update/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ReportResponse update(@PathVariable Long id,@RequestBody ReportRequest request){
+        return reportManager.update(id,request);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Long id){
+        reportManager.delete(id);
+    }
 }

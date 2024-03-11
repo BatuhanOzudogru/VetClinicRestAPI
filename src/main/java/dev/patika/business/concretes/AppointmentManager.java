@@ -103,20 +103,33 @@ public class AppointmentManager implements IAppointmentService {
 
     @Override
     public AppointmentResponse update(Long id, AppointmentRequest request) {
-        Optional<Appointment> AppointmentFromDb = appointmentRepo.findById(id);
+        Optional<Appointment> appointmentFromDb = appointmentRepo.findById(id);
 
-        if (AppointmentFromDb.isEmpty()) {
+        if (appointmentFromDb.isEmpty()) {
             throw new NotFoundException(Message.NOT_FOUND);
         }
 
-//        if (request.getAvailableDate() == null || request.getDoctor().getId() == null) {
-//            throw new EntityExistsException(Message.ALREADY_EXIST);
-//        }
+        Appointment appointment = appointmentFromDb.get();
 
-        Appointment appointment = AppointmentFromDb.get();
+        Optional<AvailableDate> isAvailableDateExist = availableDateRepo.findByDoctorAndDate(request.getDoctor(), request.getAppointmentDate().toLocalDate());
+        Optional<Appointment> isAppointmentExist = appointmentRepo.findByDoctorAndAnimalAndAppointmentDate(request.getDoctor(), request.getAnimal(), request.getAppointmentDate());
+        Optional<Appointment> isAppointmentTaken = appointmentRepo.findByDoctorAndAppointmentDate(request.getDoctor(), request.getAppointmentDate());
+
+        if (request.getAppointmentDate().getMinute() != 0) {
+            throw new AppointmentTimeException();
+        } else if (isAppointmentExist.isPresent()) {
+            throw new AppointmentExistsException();
+        } else if (isAvailableDateExist.isEmpty()) {
+            throw new DoctorNotAvailableException();
+        } else if (isAppointmentTaken.isPresent() && !isAppointmentTaken.get().getId().equals(id)) {
+            throw new AppointmentNotAvailableException();
+        }
+
+
         appointmentMapper.update(appointment, request);
         return appointmentMapper.asOutput(appointmentRepo.save(appointment));
     }
+
 
     @Override
     public Page<AppointmentResponse> cursor(int page, int size) {
