@@ -50,7 +50,7 @@ public class AvailableDateController {
     @ResponseStatus(HttpStatus.OK)
     public ResultData<CursorResponse<AvailableDateResponse>> cursor(
             @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(name = "size", required = false, defaultValue = "10") int size
+            @RequestParam(name = "size", required = false, defaultValue = "10000") int size
     ){
 
         return ResultHelper.cursor(availableDateManager.cursor(page, size));

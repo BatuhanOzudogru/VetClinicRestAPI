@@ -14,7 +14,7 @@ public class Message {
     public static final String APP0_TIME_ERROR = "Appointments can be set at the beginning of each hour";
     public static final String APP0_EXIST_ERROR = "Appointment for this animal exists at this hour";
     public static final String APP0_NOT_AVA_ERROR = "No appointment available at this hour";
-
+    public static final String REPORT_EXIST = "This appointment has a report and cannot be deleted.";
     public static final String ANIMALS_DONT_MATCH = "The animal in the appointment and the animal in the report do not match";
 
 }

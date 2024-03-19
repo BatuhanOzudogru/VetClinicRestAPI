@@ -4,16 +4,10 @@ import dev.patika.business.abstracts.IAppointmentService;
 import dev.patika.core.config.mapper.IAppointmentMapper;
 import dev.patika.core.exception.*;
 import dev.patika.core.utils.Message;
-import dev.patika.dal.IAnimalRepo;
-import dev.patika.dal.IAppointmentRepo;
-import dev.patika.dal.IAvailableDateRepo;
-import dev.patika.dal.IDoctorRepo;
+import dev.patika.dal.*;
 import dev.patika.dto.request.AppointmentRequest;
 import dev.patika.dto.response.standard.AppointmentResponse;
-import dev.patika.entity.Animal;
-import dev.patika.entity.Appointment;
-import dev.patika.entity.AvailableDate;
-import dev.patika.entity.Doctor;
+import dev.patika.entity.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +27,8 @@ public class AppointmentManager implements IAppointmentService {
     private final IAvailableDateRepo availableDateRepo;
     private final IDoctorRepo doctorRepo;
     private final IAnimalRepo animalRepo;
+    private final ReportRepository reportRepository;
+    private final ReportManager reportManager;
 
     @Override
     public AppointmentResponse getById(Long id) {
@@ -93,8 +89,19 @@ public class AppointmentManager implements IAppointmentService {
     @Override
     public void delete(Long id) {
         Optional<Appointment> AppointmentFromDb = appointmentRepo.findById(id);
+
+
         if (AppointmentFromDb.isPresent()) {
-            appointmentRepo.delete(AppointmentFromDb.get());
+         Optional<Report> report =  reportRepository.findReportByAppointmentId(id);
+
+         if (report.isPresent()) {
+
+             throw new ReportExistException();
+
+         } else {
+             appointmentRepo.delete(AppointmentFromDb.get());
+         }
+
         } else {
             throw new NotFoundException(Message.NOT_FOUND);
 

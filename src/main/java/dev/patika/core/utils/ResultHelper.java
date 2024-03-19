@@ -74,5 +74,9 @@ public class ResultHelper {
         return success(cursorResponse);
     }
 
+    public static Result reportExistsError() {
+        return new Result(false, "400", Message.REPORT_EXIST);
+    }
+
 
 }

@@ -5,6 +5,8 @@ import dev.patika.core.exception.*;
 import dev.patika.core.result.Result;
 import dev.patika.core.result.ResultData;
 import dev.patika.core.utils.ResultHelper;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,13 +66,38 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ResultHelper.animalsDontMatch(), HttpStatus.BAD_REQUEST);
     }
 
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ResultData<List<String>>> handleValidationErrors(MethodArgumentNotValidException e) {
         List<String> validationErrorList = e.getBindingResult().getFieldErrors()
                 .stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
 
         return new ResponseEntity<>(ResultHelper.validateError(validationErrorList), HttpStatus.BAD_REQUEST);
+    }
+
+//    @ExceptionHandler(ConstraintViolationException.class)
+//    public ResponseEntity<ResultData<List<String>>> handleValidationErrors2(ConstraintViolationException e) {
+//        List<String> validationErrorList = e.getConstraintViolations()
+//                .stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+//
+//        return new ResponseEntity<>(ResultHelper.validateError(validationErrorList), HttpStatus.BAD_REQUEST);
+//    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ResultData<List<String>>> handleValidationErrors2(ConstraintViolationException e) {
+        List<String> validationErrorList = new ArrayList<>();
+
+        for (ConstraintViolation<?> violation : e.getConstraintViolations()) {
+            validationErrorList.add(violation.getPropertyPath() + " value " + violation.getMessage());
+        }
+
+        return new ResponseEntity<>(ResultHelper.validateError(validationErrorList), HttpStatus.BAD_REQUEST);
+    }
+
+
+
+    @ExceptionHandler(ReportExistException.class)
+    public ResponseEntity<Result>  handleReportExistException(){
+        return new ResponseEntity<>(ResultHelper.reportExistsError(), HttpStatus.BAD_REQUEST);
     }
 
 

@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -38,7 +40,9 @@ public class AppointmentController {
             @RequestParam(name = "endDate", required = false, defaultValue = "2023-12-31")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
 
-        return ResultHelper.success(appointmentManager.getByDoctorIdAndAppointmentDate(id, startDate.atStartOfDay(), endDate.atStartOfDay()));
+        LocalDateTime endOfDay = endDate.atTime(LocalTime.MAX);
+
+        return ResultHelper.success(appointmentManager.getByDoctorIdAndAppointmentDate(id, startDate.atStartOfDay(), endOfDay));
     }
 
     // Değerlendirme Formu 23 - Randevular kullanıcı tarafından girilen tarih aralığına ve hayvana göre filtreleniyor mu?
@@ -52,7 +56,9 @@ public class AppointmentController {
             @RequestParam(name = "endDate", required = false, defaultValue = "2023-12-31")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
 
-        return ResultHelper.success(appointmentManager.getByAnimalIdAndAppointmentDate(id, startDate.atStartOfDay(), endDate.atStartOfDay()));
+        LocalDateTime endOfDay = endDate.atTime(LocalTime.MAX);
+
+        return ResultHelper.success(appointmentManager.getByAnimalIdAndAppointmentDate(id, startDate.atStartOfDay(), endOfDay));
     }
 
     // Değerlendirme Formu 14 - Proje isterlerine göre randevu kaydediliyor mu?
@@ -81,7 +87,7 @@ public class AppointmentController {
     @ResponseStatus(HttpStatus.OK)
     public ResultData<CursorResponse<AppointmentResponse>> cursor(
             @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(name = "size", required = false, defaultValue = "10") int size
+            @RequestParam(name = "size", required = false, defaultValue = "10000") int size
     ) {
 
         return ResultHelper.cursor(appointmentManager.cursor(page, size));

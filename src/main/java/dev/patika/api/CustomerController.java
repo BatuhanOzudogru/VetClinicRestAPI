@@ -61,7 +61,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.OK)
     public ResultData<CursorResponse<CustomerResponse>> cursor(
             @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(name = "size", required = false, defaultValue = "10") int size
+            @RequestParam(name = "size", required = false, defaultValue = "10000") int size
     ){
 
         return ResultHelper.cursor(customerManager.cursor(page, size));

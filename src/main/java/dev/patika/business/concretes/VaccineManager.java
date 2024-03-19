@@ -51,7 +51,7 @@ public class VaccineManager implements IVaccineService {
     // Değerlendirme Formu 21 - Hayvanların aşı kayıtları, girilen tarih aralığına göre doğru şekilde listeleniyor mu?
     @Override
     public List<VaccineResponse> getByPeriod(LocalDate startDate, LocalDate endDate) {
-        return vaccineMapper.asOutput(vaccineRepo.findByProtectionFinishDateBetween(startDate, endDate).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
+        return vaccineMapper.asOutput(vaccineRepo.findByProtectionFinishDateBetween(startDate, endDate));
     }
 
     // Değerlendirme Formu 15 - Proje isterlerine göre hayvana ait aşı kaydediliyor mu?
@@ -122,18 +122,15 @@ public class VaccineManager implements IVaccineService {
         Long reportAnimalId = vaccineReport.getAppointment().getAnimal().getId();
 
 
-        List<Vaccine> isVaccineValid = vaccineRepo.findVaccinesAfterStartDate(request.getCode(), request.getAnimal().getId(), request.getProtectionStartDate());
 
-        if (isVaccineValid.isEmpty()) {
-            if (requestAnimalId.equals(reportAnimalId)) {
-                vaccineMapper.update(vaccine, request);
-                return vaccineMapper.asOutput(vaccineRepo.save(vaccine));
-            } else {
-                throw new AnimalsDontMatchException();
-            }
+
+        if (requestAnimalId.equals(reportAnimalId)) {
+            vaccineMapper.update(vaccine, request);
+            return vaccineMapper.asOutput(vaccineRepo.save(vaccine));
+        } else {
+            throw new AnimalsDontMatchException();
         }
 
-        throw new VaccineExistsException();
     }
 
 

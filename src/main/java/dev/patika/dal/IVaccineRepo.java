@@ -28,6 +28,11 @@ public interface IVaccineRepo extends JpaRepository<Vaccine, Long> {
             @Param("startDate") LocalDate startDate
     );
 
-    Optional<List<Vaccine>> findByProtectionFinishDateBetween(LocalDate startDate, LocalDate endDate);
+    @Query("SELECT v FROM Vaccine v WHERE v.protectionStartDate >= :startDate " +
+            "AND v.protectionFinishDate <= :endDate")
+    List<Vaccine> findByProtectionFinishDateBetween(
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate
+    );
 
 }
