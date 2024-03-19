@@ -43,7 +43,7 @@ public class Animal {
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-    @OneToMany(mappedBy = "animal",fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "animal",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Appointment> appointmentList;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -51,7 +51,7 @@ public class Animal {
     @JsonIgnore
     private Customer customer;
 
-    @OneToMany(mappedBy = "animal",fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "animal",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Vaccine> vaccineList;
 
 }

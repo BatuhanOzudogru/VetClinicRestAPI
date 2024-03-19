@@ -35,10 +35,10 @@ public class Report {
     @Positive
     private double price;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "appointment_id" , referencedColumnName = "id")
     private Appointment appointment;
 
-    @OneToMany(mappedBy = "report", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "report", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Vaccine> vaccineList;
 }
