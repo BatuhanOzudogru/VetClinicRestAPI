@@ -1,6 +1,7 @@
 package dev.patika.dto.response.standard;
 
 import dev.patika.dto.response.global.GlobalAnimalResponse;
+import dev.patika.dto.response.global.GlobalReportResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,5 +27,5 @@ public class VaccineResponse {
 
     private GlobalAnimalResponse animal;
 
-
+    private GlobalReportResponse report;
 }

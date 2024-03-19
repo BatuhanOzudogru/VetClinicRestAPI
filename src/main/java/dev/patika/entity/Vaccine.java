@@ -30,12 +30,12 @@ public class Vaccine {
     private String code;
 
     @NotNull
-    @Temporal(TemporalType.DATE) ///
+    @Temporal(TemporalType.DATE)
     @Column(name = "protection_start_date")
     private LocalDate protectionStartDate;
 
     @NotNull
-    @Temporal(TemporalType.DATE) ///
+    @Temporal(TemporalType.DATE)
     @Column(name = "protection_finish_date")
     private LocalDate protectionFinishDate;
 

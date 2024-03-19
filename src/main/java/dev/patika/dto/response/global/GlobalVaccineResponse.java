@@ -19,4 +19,5 @@ public class GlobalVaccineResponse {
     private LocalDate protectionStartDate;
     private LocalDate protectionFinishDate;
     private GlobalAnimalResponse animal;
+    private GlobalReportResponse report;
 }
