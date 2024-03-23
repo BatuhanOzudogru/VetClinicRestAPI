@@ -78,5 +78,29 @@ public class ResultHelper {
         return new Result(false, "400", Message.REPORT_EXIST);
     }
 
+    public static Result doctorIdNullError() {
+        return new Result(false, "400", Message.DOCTOR_ID_NULL);
+    }
+
+    public static Result reportIdNullError() {
+        return new Result(false, "400", Message.REPORT_ID_NULL);
+    }
+
+    public static Result animalIdNullError() {
+        return new Result(false, "400", Message.ANIMAL_ID_NULL);
+    }
+
+    public static Result animalSelectIdNullError() {
+        return new Result(false, "400", Message.ANIMAL_SELECT_ID_NULL);
+    }
+
+    public static Result doctorSelectIdNullError() {
+        return new Result(false, "400", Message.DOCTOR_SELECT_ID_NULL);
+    }
+
+    public static Result dateSelectIdNullError() {
+        return new Result(false, "400", Message.DATE_SELECT_ID_NULL);
+    }
+
 
 }

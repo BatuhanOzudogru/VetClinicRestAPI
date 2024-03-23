@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/animals")
 @RequiredArgsConstructor
@@ -27,8 +29,14 @@ public class AnimalController {
     // Değerlendirme Formu 16 - Hayvanlar isme göre filtreleniyor mu?
     @GetMapping("/by-name/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public ResultData<AnimalResponse> getByName(@PathVariable("name") String name) {
+    public ResultData<List<AnimalResponse>> getByName(@PathVariable("name") String name) {
         return ResultHelper.success(animalManager.getByName(name));
+    }
+
+    @GetMapping("/by-customer-name/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<List<AnimalResponse>> getByCustomerName(@PathVariable("name") String name) {
+        return ResultHelper.success(animalManager.getByCustomerName(name));
     }
 
     // Değerlendirme Formu 11 - Proje isterlerine göre hayvan kaydediliyor mu?

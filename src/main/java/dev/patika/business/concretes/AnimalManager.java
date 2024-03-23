@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,8 +35,13 @@ public class AnimalManager implements IAnimalService {
 
     // Değerlendirme Formu 16 - Hayvanlar isme göre filtreleniyor mu?
     @Override
-    public AnimalResponse getByName(String name) {
+    public List<AnimalResponse> getByName(String name) {
         return animalMapper.asOutput(animalRepo.findByNameIgnoreCaseLike(name).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
+    }
+
+    @Override
+    public List<AnimalResponse> getByCustomerName(String name) {
+        return animalMapper.asOutput(animalRepo.findByCustomerNameIgnoreCaseLike(name).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
     // Değerlendirme Formu 11 - Proje isterlerine göre hayvan kaydediliyor mu?

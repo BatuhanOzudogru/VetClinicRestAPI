@@ -2,6 +2,8 @@ package dev.patika.business.concretes;
 
 import dev.patika.business.abstracts.IAvailableDateService;
 import dev.patika.core.config.mapper.IAvailableDateMapper;
+import dev.patika.core.exception.AnimalsDontMatchException;
+import dev.patika.core.exception.DoctorIdNullException;
 import dev.patika.core.exception.EntityExistsException;
 import dev.patika.core.exception.NotFoundException;
 import dev.patika.core.utils.Message;
@@ -34,6 +36,10 @@ public class AvailableDateManager implements IAvailableDateService {
     public AvailableDateResponse create(AvailableDateRequest request) {
 
         Optional<AvailableDate> isAvailableDateExist = availableDateRepo.findByDate(request.getDate());
+
+        if (request.getDoctor().getId() == null) {
+            throw new DoctorIdNullException();
+        }
 
         if (isAvailableDateExist.isEmpty()) {
             AvailableDate availableDateSaved = availableDateRepo.save(availableDateMapper.asEntity(request));

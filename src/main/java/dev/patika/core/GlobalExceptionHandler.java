@@ -74,14 +74,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ResultHelper.validateError(validationErrorList), HttpStatus.BAD_REQUEST);
     }
 
-//    @ExceptionHandler(ConstraintViolationException.class)
-//    public ResponseEntity<ResultData<List<String>>> handleValidationErrors2(ConstraintViolationException e) {
-//        List<String> validationErrorList = e.getConstraintViolations()
-//                .stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
-//
-//        return new ResponseEntity<>(ResultHelper.validateError(validationErrorList), HttpStatus.BAD_REQUEST);
-//    }
-
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ResultData<List<String>>> handleValidationErrors2(ConstraintViolationException e) {
         List<String> validationErrorList = new ArrayList<>();
@@ -93,11 +85,39 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ResultHelper.validateError(validationErrorList), HttpStatus.BAD_REQUEST);
     }
 
-
-
     @ExceptionHandler(ReportExistException.class)
     public ResponseEntity<Result>  handleReportExistException(){
         return new ResponseEntity<>(ResultHelper.reportExistsError(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DoctorIdNullException.class)
+    public ResponseEntity<Result>  handleDoctorIdNullException(){
+        return new ResponseEntity<>(ResultHelper.doctorIdNullError(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ReportIdNullException.class)
+    public ResponseEntity<Result>  handleReportIdNullException(){
+        return new ResponseEntity<>(ResultHelper.reportIdNullError(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AnimalIdNullException.class)
+    public ResponseEntity<Result>  handleAnimalIdNullException(){
+        return new ResponseEntity<>(ResultHelper.animalIdNullError(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AnimalSelectIdNullException.class)
+    public ResponseEntity<Result>  handleAnimalSelectIdNullException(){
+        return new ResponseEntity<>(ResultHelper.animalSelectIdNullError(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DoctorSelectIdNullException.class)
+    public ResponseEntity<Result>  handleDoctorSelectIdNullException(){
+        return new ResponseEntity<>(ResultHelper.doctorSelectIdNullError(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DateSelectIdNullException.class)
+    public ResponseEntity<Result>  handleDateSelectIdNullException(){
+        return new ResponseEntity<>(ResultHelper.dateSelectIdNullError(), HttpStatus.BAD_REQUEST);
     }
 
 

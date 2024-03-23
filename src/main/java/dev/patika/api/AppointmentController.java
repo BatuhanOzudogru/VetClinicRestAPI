@@ -35,9 +35,9 @@ public class AppointmentController {
     @ResponseStatus(HttpStatus.OK)
     public ResultData<List<AppointmentResponse>> getByDoctorIdAndAppointmentDate(
             @PathVariable("id") Long id,
-            @RequestParam(name = "startDate", required = false, defaultValue = "2023-01-01")
+            @RequestParam(name = "startDate", required = false, defaultValue = "2024-01-01")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @RequestParam(name = "endDate", required = false, defaultValue = "2023-12-31")
+            @RequestParam(name = "endDate", required = false, defaultValue = "2024-12-31")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
 
         LocalDateTime endOfDay = endDate.atTime(LocalTime.MAX);
@@ -51,14 +51,12 @@ public class AppointmentController {
     @ResponseStatus(HttpStatus.OK)
     public ResultData<List<AppointmentResponse>> getByAnimalIdAndAppointmentDate(
             @PathVariable("id") Long id,
-            @RequestParam(name = "startDate", required = false, defaultValue = "2023-01-01")
+            @RequestParam(name = "startDate", required = false, defaultValue = "2024-01-01")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @RequestParam(name = "endDate", required = false, defaultValue = "2023-12-31")
+            @RequestParam(name = "endDate", required = false, defaultValue = "2024-12-31")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
 
-        LocalDateTime endOfDay = endDate.atTime(LocalTime.MAX);
-
-        return ResultHelper.success(appointmentManager.getByAnimalIdAndAppointmentDate(id, startDate.atStartOfDay(), endOfDay));
+        return ResultHelper.success(appointmentManager.getByAnimalIdAndAppointmentDate(id, startDate, endDate));
     }
 
     // Değerlendirme Formu 14 - Proje isterlerine göre randevu kaydediliyor mu?

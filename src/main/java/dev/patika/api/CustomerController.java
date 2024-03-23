@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/customers")
 @RequiredArgsConstructor
@@ -31,7 +33,7 @@ public class CustomerController {
     // (sadece bir kişiye ait hayvanları görüntüle işlemi) başarılı bir şekilde çalışıyor mu?
     @GetMapping("/by-name/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public ResultData<CustomerResponse> getByName(@PathVariable("name") String name) {
+    public ResultData<List<CustomerResponse>> getByName(@PathVariable("name") String name) {
         return ResultHelper.success(customerManager.getByName(name));
     }
 

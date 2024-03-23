@@ -16,5 +16,11 @@ public class Message {
     public static final String APP0_NOT_AVA_ERROR = "No appointment available at this hour";
     public static final String REPORT_EXIST = "This appointment has a report and cannot be deleted.";
     public static final String ANIMALS_DONT_MATCH = "The animal in the appointment and the animal in the report do not match";
+    public static final String DOCTOR_ID_NULL = "Should be assigned to a doctor";
+    public static final String REPORT_ID_NULL = "A report should be assigned";
+    public static final String ANIMAL_ID_NULL = "An animal should be assigned";
+    public static final String ANIMAL_SELECT_ID_NULL = "An animal should be selected";
+    public static final String DOCTOR_SELECT_ID_NULL = "A doctor should be selected";
+    public static final String DATE_SELECT_ID_NULL = "A date should be selected";
 
 }

@@ -4,6 +4,7 @@ import dev.patika.dto.request.AppointmentRequest;
 import dev.patika.dto.response.standard.AppointmentResponse;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
 public interface IAppointmentService {
     AppointmentResponse getById(Long id);
     List<AppointmentResponse> getByDoctorIdAndAppointmentDate(Long id, LocalDateTime startDate, LocalDateTime endDate);
-    List<AppointmentResponse> getByAnimalIdAndAppointmentDate(Long id, LocalDateTime startDate, LocalDateTime endDate);
+    List<AppointmentResponse> getByAnimalIdAndAppointmentDate(Long id, LocalDate startDate, LocalDate endDate);
 
     AppointmentResponse create(AppointmentRequest request);
 

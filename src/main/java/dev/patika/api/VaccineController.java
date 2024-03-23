@@ -40,9 +40,9 @@ public class VaccineController {
     @GetMapping("/by-period")
     @ResponseStatus(HttpStatus.OK)
     public ResultData<List<VaccineResponse>> getByPeriod(
-            @RequestParam(name = "startDate", required = false, defaultValue = "2023-01-01")
+            @RequestParam(name = "startDate", required = false, defaultValue = "2024-01-01")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @RequestParam(name = "endDate", required = false, defaultValue = "2023-12-31")
+            @RequestParam(name = "endDate", required = false, defaultValue = "2024-12-31")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
 
         return ResultHelper.success(vaccineManager.getByPeriod(startDate, endDate));

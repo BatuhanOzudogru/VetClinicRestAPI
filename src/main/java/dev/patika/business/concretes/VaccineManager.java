@@ -2,10 +2,7 @@ package dev.patika.business.concretes;
 
 import dev.patika.business.abstracts.IVaccineService;
 import dev.patika.core.config.mapper.IVaccineMapper;
-import dev.patika.core.exception.AnimalsDontMatchException;
-import dev.patika.core.exception.LocalDateException;
-import dev.patika.core.exception.NotFoundException;
-import dev.patika.core.exception.VaccineExistsException;
+import dev.patika.core.exception.*;
 import dev.patika.core.utils.Message;
 import dev.patika.dal.IAnimalRepo;
 import dev.patika.dal.IAppointmentRepo;
@@ -44,6 +41,11 @@ public class VaccineManager implements IVaccineService {
     // Değerlendirme Formu 20 - Belirli bir hayvana ait tüm aşı kayıtları (sadece bir hayvanın tüm aşı kayıtları) listelenebiliyor mu?
     @Override
     public List<VaccineResponse> getByAnimalId(Long id) {
+
+        if (id == null) {
+            throw new AnimalSelectIdNullException();
+        }
+
         Animal animal = animalRepo.findById(id).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND));
         return vaccineMapper.asOutput(vaccineRepo.findByAnimal(animal).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
@@ -51,6 +53,11 @@ public class VaccineManager implements IVaccineService {
     // Değerlendirme Formu 21 - Hayvanların aşı kayıtları, girilen tarih aralığına göre doğru şekilde listeleniyor mu?
     @Override
     public List<VaccineResponse> getByPeriod(LocalDate startDate, LocalDate endDate) {
+
+        if (startDate == null || endDate == null) {
+            throw new DateSelectIdNullException();
+        }
+
         return vaccineMapper.asOutput(vaccineRepo.findByProtectionFinishDateBetween(startDate, endDate));
     }
 
@@ -61,6 +68,15 @@ public class VaccineManager implements IVaccineService {
         if (request.getProtectionStartDate().isAfter(request.getProtectionFinishDate())) {
             throw new LocalDateException();
         }
+
+        if (request.getAnimal().getId() == null) {
+            throw new AnimalIdNullException();
+        }
+
+        if (request.getReport().getId() == null) {
+            throw new ReportIdNullException();
+        }
+
         Long requestAnimalId = request.getAnimal().getId();
         Long reportId = request.getReport().getId();
         Report vaccineReport = reportRepo.findById(reportId).orElse(null);
@@ -104,6 +120,14 @@ public class VaccineManager implements IVaccineService {
 
     @Override
     public VaccineResponse update(Long id, VaccineRequest request) {
+        if (request.getAnimal().getId() == null) {
+            throw new AnimalIdNullException();
+        }
+
+        if (request.getReport().getId() == null) {
+            throw new ReportIdNullException();
+        }
+
         Optional<Vaccine> vaccineFromDb = vaccineRepo.findById(id);
 
         if (vaccineFromDb.isEmpty()) {

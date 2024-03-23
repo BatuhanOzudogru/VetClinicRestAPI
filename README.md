@@ -13,5 +13,6 @@
 - Appointments are hourly. Appointment start times are always at the beginning of the hour.
 - Cascade delete is enabled for all entities where the remaining data would be irrelevant after deletion. (If a customer is deleted, all of their animals and appointments are deleted as well.)
 
-## Endpoints
-- Endpoints and their functionalities are listed below:![endpoints.png](src%2Fendpoints.png)
+### Uml Diagram
+
+- The UML diagram of the system is shown below:![UmlDiagram.JPG](UmlDiagram.JPG)

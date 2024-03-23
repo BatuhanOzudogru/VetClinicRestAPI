@@ -14,7 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,20 +39,33 @@ public class AppointmentManager implements IAppointmentService {
     // Değerlendirme Formu 24 - Randevular kullanıcı tarafından girilen tarih aralığına ve doktora göre filtreleniyor mu?
     @Override
     public List<AppointmentResponse> getByDoctorIdAndAppointmentDate(Long id, LocalDateTime startDate, LocalDateTime endDate) {
+
         Doctor doctor = doctorRepo.findById(id).orElseThrow();
         return appointmentMapper.asOutput(appointmentRepo.findByDoctorAndAppointmentDateBetween(doctor,startDate, endDate).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
     // Değerlendirme Formu 23 - Randevular kullanıcı tarafından girilen tarih aralığına ve hayvana göre filtreleniyor mu?
     @Override
-    public List<AppointmentResponse> getByAnimalIdAndAppointmentDate(Long id, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<AppointmentResponse> getByAnimalIdAndAppointmentDate(Long id, LocalDate startDate, LocalDate endDate) {
+
+        LocalDateTime startOfDay = startDate.atStartOfDay();
+        LocalDateTime endOfDay = endDate.atTime(LocalTime.MAX);
+
         Animal animal = animalRepo.findById(id).orElseThrow();
-        return appointmentMapper.asOutput(appointmentRepo.findByAnimalAndAppointmentDateBetween(animal,startDate, endDate).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
+        return appointmentMapper.asOutput(appointmentRepo.findByAnimalAndAppointmentDateBetween(animal,startOfDay, endOfDay).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
     // Değerlendirme Formu 14 - Proje isterlerine göre randevu kaydediliyor mu?
     @Override
     public AppointmentResponse create(AppointmentRequest request) {
+
+        if (request.getDoctor().getId() == null) {
+            throw new DoctorIdNullException();
+        }
+
+        if (request.getAnimal().getId() == null) {
+            throw new AnimalIdNullException();
+        }
 
         // Değerlendirme Formu 22 - Randevu oluşturulurken, doktorun o saatte başka bir randevusu var mı, doktorun müsait günü var mı  kontrolü yapılıyor mu?
         // Sadece randevusu yoksa ve müsait günü varsa randevu kaydına izin veriyor mu?
@@ -110,6 +125,15 @@ public class AppointmentManager implements IAppointmentService {
 
     @Override
     public AppointmentResponse update(Long id, AppointmentRequest request) {
+
+        if (request.getDoctor().getId() == null) {
+            throw new DoctorIdNullException();
+        }
+
+        if (request.getAnimal().getId() == null) {
+            throw new AnimalIdNullException();
+        }
+
         Optional<Appointment> appointmentFromDb = appointmentRepo.findById(id);
 
         if (appointmentFromDb.isEmpty()) {
