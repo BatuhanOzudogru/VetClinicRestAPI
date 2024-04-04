@@ -29,14 +29,12 @@ public class VaccineController {
         return ResultHelper.success(vaccineManager.getById(id));
     }
 
-    // Değerlendirme Formu 20 - Belirli bir hayvana ait tüm aşı kayıtları (sadece bir hayvanın tüm aşı kayıtları) listelenebiliyor mu?
     @GetMapping("/by-animal-id/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResultData<List<VaccineResponse>> getByAnimalId(@PathVariable("id") Long id) {
         return ResultHelper.success(vaccineManager.getByAnimalId(id));
     }
 
-    // Değerlendirme Formu 21 - Hayvanların aşı kayıtları, girilen tarih aralığına göre doğru şekilde listeleniyor mu?
     @GetMapping("/by-period")
     @ResponseStatus(HttpStatus.OK)
     public ResultData<List<VaccineResponse>> getByPeriod(
@@ -48,7 +46,6 @@ public class VaccineController {
         return ResultHelper.success(vaccineManager.getByPeriod(startDate, endDate));
     }
 
-    // Değerlendirme Formu 15 - Proje isterlerine göre hayvana ait aşı kaydediliyor mu?
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<VaccineResponse> save(@Valid @RequestBody VaccineRequest request) {

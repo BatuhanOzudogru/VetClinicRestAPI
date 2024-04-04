@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Mapper
-public interface IAvailableDateMapper {
+public interface AvailableDateMapper {
     AvailableDate asEntity(AvailableDateRequest request);
 
     AvailableDateResponse asOutput(AvailableDate availableDate);

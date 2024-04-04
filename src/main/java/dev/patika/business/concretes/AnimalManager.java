@@ -1,12 +1,12 @@
 package dev.patika.business.concretes;
 
-import dev.patika.business.abstracts.IAnimalService;
+import dev.patika.business.abstracts.AnimalService;
 
-import dev.patika.core.config.mapper.IAnimalMapper;
+import dev.patika.core.config.mapper.AnimalMapper;
 import dev.patika.core.exception.EntityExistsException;
 import dev.patika.core.exception.NotFoundException;
 import dev.patika.core.utils.Message;
-import dev.patika.dal.IAnimalRepo;
+import dev.patika.dal.AnimalRepo;
 
 import dev.patika.dto.request.AnimalRequest;
 import dev.patika.dto.response.standard.AnimalResponse;
@@ -23,17 +23,16 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AnimalManager implements IAnimalService {
+public class AnimalManager implements AnimalService {
 
-    private final IAnimalRepo animalRepo;
-    private final IAnimalMapper animalMapper;
+    private final AnimalRepo animalRepo;
+    private final AnimalMapper animalMapper;
 
     @Override
     public AnimalResponse getById(Long id) {
         return animalMapper.asOutput(animalRepo.findById(id).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
-    // Değerlendirme Formu 16 - Hayvanlar isme göre filtreleniyor mu?
     @Override
     public List<AnimalResponse> getByName(String name) {
         return animalMapper.asOutput(animalRepo.findByNameIgnoreCaseLike(name).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
@@ -44,7 +43,6 @@ public class AnimalManager implements IAnimalService {
         return animalMapper.asOutput(animalRepo.findByCustomerNameIgnoreCaseLike(name).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
-    // Değerlendirme Formu 11 - Proje isterlerine göre hayvan kaydediliyor mu?
     @Override
     public AnimalResponse create(AnimalRequest request) {
 
@@ -82,10 +80,6 @@ public class AnimalManager implements IAnimalService {
         if (animalFromDb.isEmpty()) {
             throw new NotFoundException(Message.NOT_FOUND);
         }
-
-//        if (request.getAvailableDate() == null || request.getDoctor().getId() == null) {
-//            throw new EntityExistsException(Message.ALREADY_EXIST);
-//        }
 
         Animal animal = animalFromDb.get();
         animalMapper.update(animal, request);

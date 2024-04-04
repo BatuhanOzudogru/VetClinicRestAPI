@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Mapper
-public interface IAnimalMapper {
+public interface AnimalMapper {
     Animal asEntity(AnimalRequest request);
 
     AnimalResponse asOutput(Animal animal);

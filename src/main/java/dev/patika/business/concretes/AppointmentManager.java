@@ -1,7 +1,7 @@
 package dev.patika.business.concretes;
 
-import dev.patika.business.abstracts.IAppointmentService;
-import dev.patika.core.config.mapper.IAppointmentMapper;
+import dev.patika.business.abstracts.AppointmentService;
+import dev.patika.core.config.mapper.AppointmentMapper;
 import dev.patika.core.exception.*;
 import dev.patika.core.utils.Message;
 import dev.patika.dal.*;
@@ -22,15 +22,14 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AppointmentManager implements IAppointmentService {
+public class AppointmentManager implements AppointmentService {
 
-    private final IAppointmentRepo appointmentRepo;
-    private final IAppointmentMapper appointmentMapper;
-    private final IAvailableDateRepo availableDateRepo;
-    private final IDoctorRepo doctorRepo;
-    private final IAnimalRepo animalRepo;
+    private final AppointmentRepo appointmentRepo;
+    private final AppointmentMapper appointmentMapper;
+    private final AvailableDateRepo availableDateRepo;
+    private final DoctorRepo doctorRepo;
+    private final AnimalRepo animalRepo;
     private final ReportRepository reportRepository;
-    private final ReportManager reportManager;
 
     @Override
     public AppointmentResponse getById(Long id) {

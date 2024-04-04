@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Mapper
-public interface IAppointmentMapper {
+public interface AppointmentMapper {
     Appointment asEntity(AppointmentRequest request);
 
     AppointmentResponse asOutput(Appointment appointment);

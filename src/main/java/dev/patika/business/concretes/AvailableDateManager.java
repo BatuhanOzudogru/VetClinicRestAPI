@@ -1,13 +1,12 @@
 package dev.patika.business.concretes;
 
-import dev.patika.business.abstracts.IAvailableDateService;
-import dev.patika.core.config.mapper.IAvailableDateMapper;
-import dev.patika.core.exception.AnimalsDontMatchException;
+import dev.patika.business.abstracts.AvailableDateService;
+import dev.patika.core.config.mapper.AvailableDateMapper;
 import dev.patika.core.exception.DoctorIdNullException;
 import dev.patika.core.exception.EntityExistsException;
 import dev.patika.core.exception.NotFoundException;
 import dev.patika.core.utils.Message;
-import dev.patika.dal.IAvailableDateRepo;
+import dev.patika.dal.AvailableDateRepo;
 import dev.patika.dto.request.AvailableDateRequest;
 import dev.patika.dto.response.standard.AvailableDateResponse;
 import dev.patika.entity.AvailableDate;
@@ -21,17 +20,16 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AvailableDateManager implements IAvailableDateService {
+public class AvailableDateManager implements AvailableDateService {
 
-    private final IAvailableDateRepo availableDateRepo;
-    private final IAvailableDateMapper availableDateMapper;
+    private final AvailableDateRepo availableDateRepo;
+    private final AvailableDateMapper availableDateMapper;
 
     @Override
     public AvailableDateResponse getById(Long id) {
         return availableDateMapper.asOutput(availableDateRepo.findById(id).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
-    // Değerlendirme Formu 13 - Proje isterlerine göre doktor müsait günü kaydediliyor mu?
     @Override
     public AvailableDateResponse create(AvailableDateRequest request) {
 
@@ -73,10 +71,6 @@ public class AvailableDateManager implements IAvailableDateService {
         if (availableDateFromDb.isEmpty()) {
             throw new NotFoundException(Message.NOT_FOUND);
         }
-
-//        if (request.getAvailableDate() == null || request.getDoctor().getId() == null) {
-//            throw new EntityExistsException(Message.ALREADY_EXIST);
-//        }
 
         AvailableDate availableDate = availableDateFromDb.get();
         availableDateMapper.update(availableDate, request);

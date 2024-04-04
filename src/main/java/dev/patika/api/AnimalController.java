@@ -26,7 +26,6 @@ public class AnimalController {
         return ResultHelper.success(animalManager.getById(id));
     }
 
-    // Değerlendirme Formu 16 - Hayvanlar isme göre filtreleniyor mu?
     @GetMapping("/by-name/{name}")
     @ResponseStatus(HttpStatus.OK)
     public ResultData<List<AnimalResponse>> getByName(@PathVariable("name") String name) {
@@ -39,7 +38,7 @@ public class AnimalController {
         return ResultHelper.success(animalManager.getByCustomerName(name));
     }
 
-    // Değerlendirme Formu 11 - Proje isterlerine göre hayvan kaydediliyor mu?
+
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<AnimalResponse> save(@Valid @RequestBody AnimalRequest request) {

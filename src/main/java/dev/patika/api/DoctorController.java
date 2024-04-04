@@ -24,7 +24,6 @@ public class DoctorController {
         return ResultHelper.success(doctorManager.getById(id));
     }
 
-    // Değerlendirme Formu 12 - Proje isterlerine göre doktor kaydediliyor mu?
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<DoctorResponse> save(@Valid @RequestBody DoctorRequest doctorRequest) {

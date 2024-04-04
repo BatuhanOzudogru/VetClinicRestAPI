@@ -9,9 +9,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
-public interface IAppointmentService {
+public interface AppointmentService {
     AppointmentResponse getById(Long id);
+
     List<AppointmentResponse> getByDoctorIdAndAppointmentDate(Long id, LocalDateTime startDate, LocalDateTime endDate);
+
     List<AppointmentResponse> getByAnimalIdAndAppointmentDate(Long id, LocalDate startDate, LocalDate endDate);
 
     AppointmentResponse create(AppointmentRequest request);

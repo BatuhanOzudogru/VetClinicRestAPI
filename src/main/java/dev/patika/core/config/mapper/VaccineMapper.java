@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Mapper
-public interface IVaccineMapper {
+public interface VaccineMapper {
     Vaccine asEntity(VaccineRequest request);
 
     VaccineResponse asOutput(Vaccine vaccine);

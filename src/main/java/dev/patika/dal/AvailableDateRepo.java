@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Repository
-public interface IAvailableDateRepo extends JpaRepository<AvailableDate, Long> {
+public interface AvailableDateRepo extends JpaRepository<AvailableDate, Long> {
    Optional<AvailableDate> findByDate(LocalDate date);
 
 //   @Query("SELECT availableDate FROM AvailableDate JOIN Doctor on AvailableDate. ")

@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Mapper
-public interface ICustomerMapper {
+public interface CustomerMapper {
     Customer asEntity(CustomerRequest request);
 
     CustomerResponse asOutput(Customer customer);

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface IAnimalRepo extends JpaRepository<Animal, Long> {
+public interface AnimalRepo extends JpaRepository<Animal, Long> {
    Optional<Animal> findByNameAndSpeciesAndBreedAndDateOfBirth(String name, String species, String breed, LocalDate date);
    Optional<Animal> findByNameAndCustomer(String name, Customer customer);
 

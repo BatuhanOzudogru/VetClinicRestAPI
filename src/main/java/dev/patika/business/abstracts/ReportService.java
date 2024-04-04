@@ -3,12 +3,12 @@ package dev.patika.business.abstracts;
 
 import dev.patika.dto.request.ReportRequest;
 import dev.patika.dto.response.standard.ReportResponse;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface ReportService {
 
-    List<ReportResponse> getAll();
+    Page<ReportResponse> cursor(int page, int size);
+
     ReportResponse getById(Long id);
 
     ReportResponse create(ReportRequest request);
@@ -17,6 +17,5 @@ public interface ReportService {
 
     ReportResponse update(Long id, ReportRequest request);
 
-    //ReportResponse getByAppointmentId(Long id);
 
 }

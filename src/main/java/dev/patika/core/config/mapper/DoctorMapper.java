@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Mapper
-public interface IDoctorMapper {
+public interface DoctorMapper {
     Doctor asEntity(DoctorRequest request);
 
     DoctorResponse asOutput(Doctor doctor);

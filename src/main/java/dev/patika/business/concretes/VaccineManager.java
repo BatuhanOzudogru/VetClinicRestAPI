@@ -1,12 +1,11 @@
 package dev.patika.business.concretes;
 
-import dev.patika.business.abstracts.IVaccineService;
-import dev.patika.core.config.mapper.IVaccineMapper;
+import dev.patika.business.abstracts.VaccineService;
+import dev.patika.core.config.mapper.VaccineMapper;
 import dev.patika.core.exception.*;
 import dev.patika.core.utils.Message;
-import dev.patika.dal.IAnimalRepo;
-import dev.patika.dal.IAppointmentRepo;
-import dev.patika.dal.IVaccineRepo;
+import dev.patika.dal.AnimalRepo;
+import dev.patika.dal.VaccineRepo;
 import dev.patika.dal.ReportRepository;
 import dev.patika.dto.request.VaccineRequest;
 import dev.patika.dto.response.standard.VaccineResponse;
@@ -25,20 +24,18 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class VaccineManager implements IVaccineService {
+public class VaccineManager implements VaccineService {
 
-    private final IVaccineRepo vaccineRepo;
-    private final IVaccineMapper vaccineMapper;
-    private final IAnimalRepo animalRepo;
+    private final VaccineRepo vaccineRepo;
+    private final VaccineMapper vaccineMapper;
+    private final AnimalRepo animalRepo;
     private final ReportRepository reportRepo;
-    private final IAppointmentRepo appointmentRepo;
 
     @Override
     public VaccineResponse getById(Long id) {
         return vaccineMapper.asOutput(vaccineRepo.findById(id).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
-    // Değerlendirme Formu 20 - Belirli bir hayvana ait tüm aşı kayıtları (sadece bir hayvanın tüm aşı kayıtları) listelenebiliyor mu?
     @Override
     public List<VaccineResponse> getByAnimalId(Long id) {
 
@@ -50,7 +47,6 @@ public class VaccineManager implements IVaccineService {
         return vaccineMapper.asOutput(vaccineRepo.findByAnimal(animal).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
-    // Değerlendirme Formu 21 - Hayvanların aşı kayıtları, girilen tarih aralığına göre doğru şekilde listeleniyor mu?
     @Override
     public List<VaccineResponse> getByPeriod(LocalDate startDate, LocalDate endDate) {
 
@@ -61,7 +57,6 @@ public class VaccineManager implements IVaccineService {
         return vaccineMapper.asOutput(vaccineRepo.findByProtectionFinishDateBetween(startDate, endDate));
     }
 
-    // Değerlendirme Formu 15 - Proje isterlerine göre hayvana ait aşı kaydediliyor mu?
     @Override
     public VaccineResponse create(VaccineRequest request) {
 
@@ -82,8 +77,6 @@ public class VaccineManager implements IVaccineService {
         Report vaccineReport = reportRepo.findById(reportId).orElse(null);
         Long reportAnimalId = vaccineReport.getAppointment().getAnimal().getId();
 
-        // Değerlendirme Formu 19 - Yeni aşı kaydetme işleminde koruyuculuk bitiş tarihi kontrolü yapılmış mı?
-        // Koruyuculuk tarihi bitmiş aşıların kaydı yapılıp, koruyuculuğu bitmemiş aşıların kaydı engellenmiş mi?
         List<Vaccine> isVaccineValid = vaccineRepo.findVaccinesAfterStartDate(request.getCode(), request.getAnimal().getId(), request.getProtectionStartDate());
 
         if (isVaccineValid.isEmpty()) {
@@ -95,14 +88,8 @@ public class VaccineManager implements IVaccineService {
             }else {
                 throw new AnimalsDontMatchException();
             }
-
         }
-
-
-
-
         throw new VaccineExistsException();
-
 
     }
 

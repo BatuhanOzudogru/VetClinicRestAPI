@@ -24,7 +24,7 @@ public class AvailableDateController {
         return ResultHelper.success(availableDateManager.getById(id));
     }
 
-    // Değerlendirme Formu 13 - Proje isterlerine göre doktor müsait günü kaydediliyor mu?
+
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<AvailableDateResponse> save(@Valid @RequestBody AvailableDateRequest availableDateRequest) {

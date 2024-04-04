@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-public interface IAnimalService {
+public interface AnimalService {
     AnimalResponse getById(Long id);
 
     List<AnimalResponse> getByName(String name);

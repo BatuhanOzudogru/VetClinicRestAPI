@@ -20,24 +20,18 @@ import java.util.List;
 public class CustomerController {
     private final CustomerManager customerManager;
 
-    // Değerlendirme Formu 18 - Girilen hayvan sahibinin sistemde kayıtlı tüm hayvanlarını görüntüleme
-    // (sadece bir kişiye ait hayvanları görüntüle işlemi) başarılı bir şekilde çalışıyor mu?
     @GetMapping("/by-id/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResultData<CustomerResponse> getById(@PathVariable("id") Long id) {
         return ResultHelper.success(customerManager.getById(id));
     }
 
-    // Değerlendirme Formu 17 - Hayvan sahipleri isme göre filtreleniyor mu?
-    // Değerlendirme Formu 18 - Girilen hayvan sahibinin sistemde kayıtlı tüm hayvanlarını görüntüleme
-    // (sadece bir kişiye ait hayvanları görüntüle işlemi) başarılı bir şekilde çalışıyor mu?
     @GetMapping("/by-name/{name}")
     @ResponseStatus(HttpStatus.OK)
     public ResultData<List<CustomerResponse>> getByName(@PathVariable("name") String name) {
         return ResultHelper.success(customerManager.getByName(name));
     }
 
-    // Değerlendirme Formu 10 - Proje isterlerine göre hayvan sahibi kaydediliyor mu?
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<CustomerResponse> save(@Valid @RequestBody CustomerRequest customerRequest) {

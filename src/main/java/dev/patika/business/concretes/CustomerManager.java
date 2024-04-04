@@ -1,14 +1,14 @@
 package dev.patika.business.concretes;
 
-import dev.patika.business.abstracts.ICustomerService;
+import dev.patika.business.abstracts.CustomerService;
+import dev.patika.core.config.mapper.CustomerMapper;
 import dev.patika.core.exception.EntityExistsException;
 import dev.patika.core.exception.NotFoundException;
 import dev.patika.core.utils.Message;
-import dev.patika.dal.ICustomerRepo;
+import dev.patika.dal.CustomerRepo;
 import dev.patika.dto.request.CustomerRequest;
 import dev.patika.dto.response.standard.CustomerResponse;
 import dev.patika.entity.Customer;
-import dev.patika.core.config.mapper.ICustomerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,27 +20,21 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CustomerManager implements ICustomerService {
+public class CustomerManager implements CustomerService {
 
-    private final ICustomerRepo customerRepo;
-    private final ICustomerMapper customerMapper;
+    private final CustomerRepo customerRepo;
+    private final CustomerMapper customerMapper;
 
-    // Değerlendirme Formu 18 - Girilen hayvan sahibinin sistemde kayıtlı tüm hayvanlarını görüntüleme
-    // (sadece bir kişiye ait hayvanları görüntüle işlemi) başarılı bir şekilde çalışıyor mu?
     @Override
     public CustomerResponse getById(Long id) {
         return customerMapper.asOutput(customerRepo.findById(id).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
-    // Değerlendirme Formu 17 - Hayvan sahipleri isme göre filtreleniyor mu?
-    // Değerlendirme Formu 18 - Girilen hayvan sahibinin sistemde kayıtlı tüm hayvanlarını görüntüleme
-    // (sadece bir kişiye ait hayvanları görüntüle işlemi) başarılı bir şekilde çalışıyor mu?
-    @Override
+   @Override
     public List<CustomerResponse> getByName(String name) {
         return customerMapper.asOutput(customerRepo.findByNameIgnoreCaseLike(name).orElseThrow(() -> new NotFoundException(Message.NOT_FOUND)));
     }
 
-    // Değerlendirme Formu 10 - Proje isterlerine göre hayvan sahibi kaydediliyor mu?
     @Override
     public CustomerResponse create(CustomerRequest customerRequest) {
         Optional<Customer> isCustomerExist = customerRepo.findByPhoneOrMail(customerRequest.getPhone(), customerRequest.getMail());
