@@ -16,3 +16,7 @@
 ### Uml Diagram
 
 - The UML diagram of the system is shown below:![UmlDiagram.JPG](UmlDiagram.JPG)
+
+<hr>
+
+An GitHub repository exists for the frontend part of the project. Click [here](https://github.com/BatuhanOzudogru/VetApp) to view the project.
